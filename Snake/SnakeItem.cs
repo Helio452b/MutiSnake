@@ -26,7 +26,7 @@ namespace Snake
 
         public int ItemHeight { get => m_itemHeight; set => m_itemHeight = value; }
         public int ItemWidth { get => m_itemWidth; set => m_itemWidth = value; }
-        public Color ItemColor { get; set; } = Color.Chocolate;
+        public Color ItemColor { get; set; } = Color.YellowGreen;
         public Point ItemPositon { get => m_itemPosition; set => m_itemPosition = value; }
     }
 }

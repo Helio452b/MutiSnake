@@ -16,19 +16,22 @@ namespace Snake
             SOUTH,
             NORTH,
             WEST,
-            EAST
+            EAST,
+            PAUSE,
+            DEAD
         };
 
-        private Graphics m_snakeGrap;
+        private Graphics m_snakeGrap; // snakebody的Graphics
         private List<SnakeItem> m_snakeBody = new List<SnakeItem>();
         private Direction m_snakeDirec;  // 前进方向
         private int m_snakeMoveSpeed;    // 行进速度
         private float m_snakeGrowSpeed = 1;   // 成长速度 0-1
         private bool m_isAlive; // 是否活着
-        private Color m_headItemColor = Color.BurlyWood;
-        private Color m_bodyItemColor = Color.Chocolate;
+        private Color m_headItemColor = Color.White;
+        private Color m_bodyItemColor = Color.YellowGreen;
         private int m_itemHeight = 10;
         private int m_itemWidth = 10;
+        private int m_snakeMoveDis = 10;
 
         public SnakeBody(Point headPoint, Graphics snakeGrap)
         {
@@ -39,12 +42,17 @@ namespace Snake
             headItem.ItemColor = this.m_headItemColor;
             m_snakeBody.Add(headItem);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 6; i++)
             {
                 AddSnakeItem();
             }
         }
        
+        public SnakeBody()
+        {
+
+        }
+
         public Direction SnakeDirec
         {
             get
@@ -84,6 +92,7 @@ namespace Snake
             }
 
         }
+
         public bool IsAlive
         {
             get
@@ -144,6 +153,20 @@ namespace Snake
             }
         }
 
+        /// <summary>
+        /// 返回HeadItem
+        /// </summary>
+        /// <returns></returns>
+        public SnakeItem HeadItem()
+        {
+            return m_snakeBody.First();
+        }
+
+        public SnakeItem TailItem()
+        {
+            return m_snakeBody.Last();
+        }
+
         public void AddSnakeItem()
         {
             SnakeItem headItem = m_snakeBody.Last();
@@ -187,65 +210,79 @@ namespace Snake
             SnakeItem tailItem = m_snakeBody.Last();
             int tailIndex = m_snakeBody.IndexOf(tailItem);
             int headIndex = m_snakeBody.IndexOf(headItem);
-
-            // 移除尾部item
-            RemoveSnakeItem(tailIndex);
-
-            // 将头部的颜色设置为身体的颜色
-            headItem.ItemColor = this.m_bodyItemColor;
-
+                     
             // 计算新的头部的位置          
             switch (m_snakeDirec)
             {
                 case Direction.SOUTH:
                     newItemPos.X = headItem.ItemPositon.X;
-                    newItemPos.Y = headItem.ItemPositon.Y + this.m_itemHeight;
+                    newItemPos.Y = headItem.ItemPositon.Y + this.m_snakeMoveDis;
                     break;
                 case Direction.NORTH:
                     newItemPos.X = headItem.ItemPositon.X;
-                    newItemPos.Y = headItem.ItemPositon.Y - this.m_itemHeight;
+                    newItemPos.Y = headItem.ItemPositon.Y - this.m_snakeMoveDis;
                     break;
                 case Direction.WEST:
-                    newItemPos.X = headItem.ItemPositon.X - this.m_itemWidth;
+                    newItemPos.X = headItem.ItemPositon.X - this.m_snakeMoveDis;
                     newItemPos.Y = headItem.ItemPositon.Y;
                     break;
                 case Direction.EAST:
-                    newItemPos.X = headItem.ItemPositon.X + this.m_itemWidth;
+                    newItemPos.X = headItem.ItemPositon.X + this.m_snakeMoveDis;
                     newItemPos.Y = headItem.ItemPositon.Y;
                     break;
-                default:
-                    // 暂停
+                case Direction.PAUSE:
+                    return;
+                default:                    
                     break;
             }
             // 新的头部
+            // 将头部的颜色设置为身体的颜色
+            headItem.ItemColor = this.m_bodyItemColor;
             newItem = new SnakeItem(newItemPos);
             newItem.ItemColor = this.m_headItemColor;
 
+            // 移除尾部item
+            RemoveSnakeItem(tailIndex);
             m_snakeBody.Insert(headIndex, newItem);
+
+            IsEatSelf();
         }
 
         public void Draw()
         {
-            foreach (SnakeItem item in m_snakeBody)
+            if (m_snakeBody != null)
             {
-                m_snakeGrap.FillRectangle(new SolidBrush(item.ItemColor), new Rectangle(item.ItemPositon, new Size(this.m_itemWidth, this.m_itemHeight)));
+                foreach (SnakeItem item in m_snakeBody)
+                {
+                    m_snakeGrap.FillRectangle(new SolidBrush(item.ItemColor), new Rectangle(item.ItemPositon, new Size(this.m_itemWidth, this.m_itemHeight)));
+                }
             }
         }
 
-        public bool IsEatSelf()
+        private void IsEatSelf()
         {
-            return false;
-        }
+            SnakeItem headItem = m_snakeBody.First();
 
-        public void EatFood(Point foodPositon)
-        {
-
+            for (int i = 1; i < m_snakeBody.Count; i++)
+            {              
+                if (m_snakeBody.ElementAt(i).ItemPositon == headItem.ItemPositon)
+                {
+                    m_snakeDirec = Direction.DEAD;
+                    this.IsAlive = false;
+                    return;
+                }
+            }
+                            
+            this.IsAlive = true;
         }
 
         public void Grow()
         {
-            this.m_itemHeight += (int)(this.m_itemHeight * this.m_snakeGrowSpeed);
-            this.m_itemWidth += (int)(this.m_itemWidth * this.m_snakeGrowSpeed);
+            if (this.SnakeDirec != Direction.PAUSE)
+            {
+                this.m_itemHeight += (int)(this.m_itemHeight * this.m_snakeGrowSpeed);
+                this.m_itemWidth += (int)(this.m_itemWidth * this.m_snakeGrowSpeed);                
+            }
         }
     }
 }

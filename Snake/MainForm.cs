@@ -26,12 +26,11 @@ namespace Snake
             // this.Size = new Size(800, 500);
             this.Height = 500;
             this.Width = 800;
-            m_gameControl = new GameControl(0);            
+            m_gameControl = new GameControl();            
             this.StartPosition = FormStartPosition.CenterScreen;
         
             currentContext = BufferedGraphicsManager.Current;
-           
-            
+                       
             bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(), new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));            
         }      
 
@@ -85,6 +84,7 @@ namespace Snake
             {
                 this.timerMove.Stop();
                 this.m_gameControl.GamePause();
+                m_gameControl.WriteData();
                 MyMessageBox deadBox = new MyMessageBox(this);
                 deadBox.Show("抱歉！你死掉啦！重新开始？");
                 if (m_messageBoxConfirm)
@@ -215,8 +215,8 @@ namespace Snake
             SizeF welcomeSize = bufferGrap.Graphics.MeasureString(welcom, consolasFont);
 
             bufferGrap.Graphics.DrawString(welcom, consolasFont, Brushes.DarkRed, 
-                                   new PointF(this.Width / 2 - welcomeSize.Width / 2, 
-                                   this.Height / 2 - welcomeSize.Height / 2));            
+                                   new PointF(this.panelPaint.Width / 2 - welcomeSize.Width / 2, 
+                                   this.panelPaint.Height / 2 - welcomeSize.Height / 2));            
         }
      
         private void MainForm_SizeChanged(object sender, EventArgs e)

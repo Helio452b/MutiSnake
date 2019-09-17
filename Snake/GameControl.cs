@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Snake
 {
@@ -28,8 +29,9 @@ namespace Snake
         private PointF m_msgPos;
         private int m_gameMode; 
         private int m_wallWidth = 20;
+        private XmlDocument m_rankingDoc = new XmlDocument();
 
-        public GameControl(int yBeignPos)
+        public GameControl()
         {              
             this.m_snake = new SnakeBody();
             this.m_isGameStart = false;
@@ -225,7 +227,7 @@ namespace Snake
         }
 
         /// <summary>
-        /// 从xml中读取相应数据
+        /// 从xml中读取排行数据
         /// </summary>
         public void ReadData()
         {
@@ -233,11 +235,57 @@ namespace Snake
         }
 
         /// <summary>
-        /// 向xml中写入相应数据
+        /// 向xml中写入排行数据
         /// </summary>
         public void WriteData()
         {
+            List<PlayerInfo> playerList = new List<PlayerInfo>();
+            // 读取 如果数据大于10 则删除最后一个
+            m_rankingDoc.Load(Environment.CurrentDirectory.ToString() + "\\Ranking.xml");
 
+            // 获得根节点
+            XmlElement root = m_rankingDoc.DocumentElement;
+            XmlNodeList playerNodeList = root.ChildNodes;
+
+            int playerCount = Convert.ToInt32(root.GetAttribute("PlayerCount"));
+            if(playerCount == 10)
+            {  // 删除最后一个
+                foreach (XmlNode item in playerNodeList)
+                {
+                    PlayerInfo player = new PlayerInfo();
+                    player.PlayerName = ((XmlElement)item).GetAttribute("name").Trim();
+                    player.GameLevel = Convert.ToInt32(((XmlElement)(item.ChildNodes[0])).InnerText.Trim());
+                    player.Score = Convert.ToInt32(((XmlElement)(item.ChildNodes[1])).InnerText.Trim());
+
+                    playerList.Add(player);
+                }
+
+                // 分数排序
+                playerList.Sort();
+
+                string strPath = string.Format("/root/player[@name=\"{0}\"]", playerList.Last().PlayerName);
+                Console.WriteLine(strPath);
+                XmlNode selectNode = root.SelectSingleNode(strPath);
+
+                root.RemoveChild(selectNode);
+                root.SetAttribute("PlayerCount", (--playerCount).ToString());
+            }
+
+            root.SetAttribute("PlayerCount", (++playerCount).ToString());
+            XmlElement playerElem = m_rankingDoc.CreateElement("player");
+            playerElem.SetAttribute("name", "player" + playerCount);
+
+            XmlElement gameLevelElem = m_rankingDoc.CreateElement("GameLevel");
+            gameLevelElem.InnerText = Properties.Settings.Default.GameLevel.ToString();
+
+            XmlElement scoreElem = m_rankingDoc.CreateElement("Score");
+            scoreElem.InnerText = m_score.ToString();
+
+            playerElem.AppendChild(gameLevelElem);
+            playerElem.AppendChild(scoreElem);
+            root.AppendChild(playerElem);
+
+            m_rankingDoc.Save(Environment.CurrentDirectory + "\\Ranking.xml");
         }
 
         /// <summary>

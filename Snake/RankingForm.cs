@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-
+using PlayerInfo;
 namespace Snake
 {
     public partial class RankingForm : Form
     {
-        private List<PlayerInfo> m_playerList = new List<PlayerInfo>();        
+        private List<Player> m_playerList = new List<Player>();        
         private XmlDocument m_rankingDoc = new XmlDocument();
         public RankingForm()
         {
@@ -31,7 +31,7 @@ namespace Snake
 
             foreach (XmlNode item in playerNodeList)
             {
-                PlayerInfo player = new PlayerInfo();
+                Player player = new Player();
                 player.PlayerName = ((XmlElement)item).GetAttribute("name").Trim();
                 player.GameLevel = Convert.ToInt32(((XmlElement)(item.ChildNodes[0])).InnerText.Trim());
                 player.Score = Convert.ToInt32(((XmlElement)(item.ChildNodes[1])).InnerText.Trim());

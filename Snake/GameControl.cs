@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using PlayerInfo;
 
 namespace Snake
 {
@@ -30,6 +31,7 @@ namespace Snake
         private int m_gameMode; 
         private int m_wallWidth = 20;
         private XmlDocument m_rankingDoc = new XmlDocument();
+        private Random m_random = new Random((int)DateTime.Now.Ticks);
 
         public GameControl()
         {              
@@ -118,9 +120,7 @@ namespace Snake
 
             this.m_winHeight = winHeight;
             this.m_winWidth = winWidth;
-
-            Console.WriteLine("winheight" + m_winHeight);
-            Console.WriteLine("winwidth" + m_winWidth);
+ 
             // 计算snake初始点
             Point beginPos = new Point(winWidth / 2 - (winWidth / 2) % 10,
                                        winHeight / 2 - (winHeight / 2) % 10);
@@ -190,9 +190,7 @@ namespace Snake
                     break;
                 case SnakeBody.Direction.EAST:
                     if (Math.Abs(m_winWidth - m_snake.HeadItem().ItemPositon.X) < m_wallWidth)
-                    {
-                        Console.WriteLine("headitem x: " + m_snake.HeadItem().ItemPositon.X);
-                        Console.WriteLine("winwidth :" + m_winWidth);
+                    {    
                         m_snake.IsAlive = false;
                         return true;
                     }
@@ -227,19 +225,11 @@ namespace Snake
         }
 
         /// <summary>
-        /// 从xml中读取排行数据
-        /// </summary>
-        public void ReadData()
-        {
-
-        }
-
-        /// <summary>
         /// 向xml中写入排行数据
         /// </summary>
         public void WriteData()
         {
-            List<PlayerInfo> playerList = new List<PlayerInfo>();
+            List<Player> playerList = new List<Player>();
             // 读取 如果数据大于10 则删除最后一个
             m_rankingDoc.Load(Environment.CurrentDirectory.ToString() + "\\Ranking.xml");
 
@@ -252,7 +242,7 @@ namespace Snake
             {  // 删除最后一个
                 foreach (XmlNode item in playerNodeList)
                 {
-                    PlayerInfo player = new PlayerInfo();
+                    Player player = new Player();
                     player.PlayerName = ((XmlElement)item).GetAttribute("name").Trim();
                     player.GameLevel = Convert.ToInt32(((XmlElement)(item.ChildNodes[0])).InnerText.Trim());
                     player.Score = Convert.ToInt32(((XmlElement)(item.ChildNodes[1])).InnerText.Trim());
@@ -263,8 +253,7 @@ namespace Snake
                 // 分数排序
                 playerList.Sort();
 
-                string strPath = string.Format("/root/player[@name=\"{0}\"]", playerList.Last().PlayerName);
-                Console.WriteLine(strPath);
+                string strPath = string.Format("/root/player[@name=\"{0}\"]", playerList.Last().PlayerName);                
                 XmlNode selectNode = root.SelectSingleNode(strPath);
 
                 root.RemoveChild(selectNode);
@@ -273,7 +262,7 @@ namespace Snake
 
             root.SetAttribute("PlayerCount", (++playerCount).ToString());
             XmlElement playerElem = m_rankingDoc.CreateElement("player");
-            playerElem.SetAttribute("name", "player" + playerCount);
+            playerElem.SetAttribute("name", GenerateName());
 
             XmlElement gameLevelElem = m_rankingDoc.CreateElement("GameLevel");
             gameLevelElem.InnerText = Properties.Settings.Default.GameLevel.ToString();
@@ -325,6 +314,28 @@ namespace Snake
         {
             if (m_snake.SnakeMoveSpeed > 5)
                 m_snake.SnakeMoveSpeed -= 5;
+        }
+
+        /// <summary>
+        /// 自动生成UserId
+        /// </summary>
+        /// <returns>返回生成的名字 形容词 + 名词</returns>
+        private string GenerateName()
+        {
+            string[] firstName =  { "伟大的","谦虚的","一表人才的","不屈不挠的","刻苦的","美丽的","谦恭有利的",
+                                    "敬贤礼士的","落落大方的","仙风道骨的","助人为乐的","聪慧的","冰雪聪明的",
+                                    "伶牙俐齿的","堂堂正正的","勤恳的","热心的","有智慧的","老练的","亭亭玉立的",
+                                    "耿直的","貌美如花的","不修边幅的","心地善良的"};
+
+
+            string[] lastName = { "海绵宝宝","圣斗士","大穷猫","铁拳","加加鲁","开心超人","郭靖",
+                                  "日暮警官","钢铁大使","派大星","绿巨人","慢羊羊","德邦总管","炼金术士",
+                                  "流川枫","美国队长","猪猪侠","铃木园子","铁憨憨","甜心超人","索罗","张无忌"};
+
+            string s1 = firstName[m_random.Next(0, firstName.Length - 1)];
+            string s2 = lastName[m_random.Next(0, lastName.Length - 1)];
+            string name = s1 + s2;
+            return name;
         }
     }
 }

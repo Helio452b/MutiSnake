@@ -44,6 +44,7 @@
             this.radioButtonLevel6 = new System.Windows.Forms.RadioButton();
             this.buttonOk = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.groupBoxIpAdress = new System.Windows.Forms.GroupBox();
             this.groupBoxMode.SuspendLayout();
             this.tableLayoutPanelGameMode.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
@@ -56,9 +57,9 @@
             this.tableLayoutPanelMain.SetColumnSpan(this.groupBoxMode, 2);
             this.groupBoxMode.Controls.Add(this.tableLayoutPanelGameMode);
             this.groupBoxMode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxMode.Location = new System.Drawing.Point(3, 169);
+            this.groupBoxMode.Location = new System.Drawing.Point(3, 119);
             this.groupBoxMode.Name = "groupBoxMode";
-            this.groupBoxMode.Size = new System.Drawing.Size(574, 160);
+            this.groupBoxMode.Size = new System.Drawing.Size(574, 110);
             this.groupBoxMode.TabIndex = 1;
             this.groupBoxMode.TabStop = false;
             this.groupBoxMode.Text = "游戏模式";
@@ -79,16 +80,16 @@
             this.tableLayoutPanelGameMode.RowCount = 2;
             this.tableLayoutPanelGameMode.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelGameMode.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelGameMode.Size = new System.Drawing.Size(568, 134);
+            this.tableLayoutPanelGameMode.Size = new System.Drawing.Size(568, 84);
             this.tableLayoutPanelGameMode.TabIndex = 0;
             // 
             // radioButtonOnline
             // 
             this.radioButtonOnline.AutoSize = true;
             this.radioButtonOnline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonOnline.Location = new System.Drawing.Point(229, 70);
+            this.radioButtonOnline.Location = new System.Drawing.Point(229, 45);
             this.radioButtonOnline.Name = "radioButtonOnline";
-            this.radioButtonOnline.Size = new System.Drawing.Size(107, 61);
+            this.radioButtonOnline.Size = new System.Drawing.Size(107, 36);
             this.radioButtonOnline.TabIndex = 1;
             this.radioButtonOnline.TabStop = true;
             this.radioButtonOnline.Tag = "2";
@@ -101,7 +102,7 @@
             this.radioButtonOffline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioButtonOffline.Location = new System.Drawing.Point(229, 3);
             this.radioButtonOffline.Name = "radioButtonOffline";
-            this.radioButtonOffline.Size = new System.Drawing.Size(107, 61);
+            this.radioButtonOffline.Size = new System.Drawing.Size(107, 36);
             this.radioButtonOffline.TabIndex = 0;
             this.radioButtonOffline.TabStop = true;
             this.radioButtonOffline.Tag = "1";
@@ -115,17 +116,18 @@
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelMain.Controls.Add(this.groupBoxMode, 0, 1);
             this.tableLayoutPanelMain.Controls.Add(this.groupBoxGameLevel, 0, 0);
-            this.tableLayoutPanelMain.Controls.Add(this.buttonOk, 0, 2);
-            this.tableLayoutPanelMain.Controls.Add(this.buttonCancel, 1, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.buttonOk, 0, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.buttonCancel, 1, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.groupBoxIpAdress, 0, 2);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            this.tableLayoutPanelMain.RowCount = 3;
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanelMain.RowCount = 4;
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(580, 371);
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(580, 389);
             this.tableLayoutPanelMain.TabIndex = 2;
             // 
             // groupBoxGameLevel
@@ -135,7 +137,7 @@
             this.groupBoxGameLevel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxGameLevel.Location = new System.Drawing.Point(3, 3);
             this.groupBoxGameLevel.Name = "groupBoxGameLevel";
-            this.groupBoxGameLevel.Size = new System.Drawing.Size(574, 160);
+            this.groupBoxGameLevel.Size = new System.Drawing.Size(574, 110);
             this.groupBoxGameLevel.TabIndex = 0;
             this.groupBoxGameLevel.TabStop = false;
             this.groupBoxGameLevel.Text = "游戏等级";
@@ -162,7 +164,7 @@
             this.tableLayoutPanelGameLevel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelGameLevel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelGameLevel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanelGameLevel.Size = new System.Drawing.Size(568, 134);
+            this.tableLayoutPanelGameLevel.Size = new System.Drawing.Size(568, 84);
             this.tableLayoutPanelGameLevel.TabIndex = 0;
             // 
             // radioButtonLevel1
@@ -171,7 +173,7 @@
             this.radioButtonLevel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioButtonLevel1.Location = new System.Drawing.Point(191, 3);
             this.radioButtonLevel1.Name = "radioButtonLevel1";
-            this.radioButtonLevel1.Size = new System.Drawing.Size(88, 38);
+            this.radioButtonLevel1.Size = new System.Drawing.Size(88, 22);
             this.radioButtonLevel1.TabIndex = 0;
             this.radioButtonLevel1.TabStop = true;
             this.radioButtonLevel1.Tag = "1";
@@ -183,9 +185,9 @@
             // 
             this.radioButtonLevel3.AutoSize = true;
             this.radioButtonLevel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonLevel3.Location = new System.Drawing.Point(191, 47);
+            this.radioButtonLevel3.Location = new System.Drawing.Point(191, 31);
             this.radioButtonLevel3.Name = "radioButtonLevel3";
-            this.radioButtonLevel3.Size = new System.Drawing.Size(88, 38);
+            this.radioButtonLevel3.Size = new System.Drawing.Size(88, 22);
             this.radioButtonLevel3.TabIndex = 1;
             this.radioButtonLevel3.TabStop = true;
             this.radioButtonLevel3.Tag = "3";
@@ -197,9 +199,9 @@
             // 
             this.radioButtonLevel5.AutoSize = true;
             this.radioButtonLevel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonLevel5.Location = new System.Drawing.Point(191, 91);
+            this.radioButtonLevel5.Location = new System.Drawing.Point(191, 59);
             this.radioButtonLevel5.Name = "radioButtonLevel5";
-            this.radioButtonLevel5.Size = new System.Drawing.Size(88, 40);
+            this.radioButtonLevel5.Size = new System.Drawing.Size(88, 22);
             this.radioButtonLevel5.TabIndex = 2;
             this.radioButtonLevel5.TabStop = true;
             this.radioButtonLevel5.Tag = "5";
@@ -213,7 +215,7 @@
             this.radioButtonLevel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioButtonLevel2.Location = new System.Drawing.Point(285, 3);
             this.radioButtonLevel2.Name = "radioButtonLevel2";
-            this.radioButtonLevel2.Size = new System.Drawing.Size(88, 38);
+            this.radioButtonLevel2.Size = new System.Drawing.Size(88, 22);
             this.radioButtonLevel2.TabIndex = 3;
             this.radioButtonLevel2.TabStop = true;
             this.radioButtonLevel2.Tag = "2";
@@ -225,9 +227,9 @@
             // 
             this.radioButtonLevel4.AutoSize = true;
             this.radioButtonLevel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonLevel4.Location = new System.Drawing.Point(285, 47);
+            this.radioButtonLevel4.Location = new System.Drawing.Point(285, 31);
             this.radioButtonLevel4.Name = "radioButtonLevel4";
-            this.radioButtonLevel4.Size = new System.Drawing.Size(88, 38);
+            this.radioButtonLevel4.Size = new System.Drawing.Size(88, 22);
             this.radioButtonLevel4.TabIndex = 4;
             this.radioButtonLevel4.TabStop = true;
             this.radioButtonLevel4.Tag = "4";
@@ -239,9 +241,9 @@
             // 
             this.radioButtonLevel6.AutoSize = true;
             this.radioButtonLevel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonLevel6.Location = new System.Drawing.Point(285, 91);
+            this.radioButtonLevel6.Location = new System.Drawing.Point(285, 59);
             this.radioButtonLevel6.Name = "radioButtonLevel6";
-            this.radioButtonLevel6.Size = new System.Drawing.Size(88, 40);
+            this.radioButtonLevel6.Size = new System.Drawing.Size(88, 22);
             this.radioButtonLevel6.TabIndex = 5;
             this.radioButtonLevel6.TabStop = true;
             this.radioButtonLevel6.Tag = "6";
@@ -255,7 +257,7 @@
             this.buttonOk.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOk.Font = new System.Drawing.Font("微软雅黑", 10.8F);
-            this.buttonOk.Location = new System.Drawing.Point(87, 335);
+            this.buttonOk.Location = new System.Drawing.Point(87, 352);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(115, 32);
             this.buttonOk.TabIndex = 2;
@@ -269,7 +271,7 @@
             this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Font = new System.Drawing.Font("微软雅黑", 10.8F);
-            this.buttonCancel.Location = new System.Drawing.Point(377, 335);
+            this.buttonCancel.Location = new System.Drawing.Point(377, 352);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(115, 32);
             this.buttonCancel.TabIndex = 3;
@@ -277,12 +279,23 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
+            // groupBoxIpAdress
+            // 
+            this.tableLayoutPanelMain.SetColumnSpan(this.groupBoxIpAdress, 2);
+            this.groupBoxIpAdress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxIpAdress.Location = new System.Drawing.Point(3, 235);
+            this.groupBoxIpAdress.Name = "groupBoxIpAdress";
+            this.groupBoxIpAdress.Size = new System.Drawing.Size(574, 110);
+            this.groupBoxIpAdress.TabIndex = 4;
+            this.groupBoxIpAdress.TabStop = false;
+            this.groupBoxIpAdress.Text = "服务器IP地址";
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(580, 371);
+            this.ClientSize = new System.Drawing.Size(580, 389);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -319,5 +332,6 @@
         private System.Windows.Forms.RadioButton radioButtonLevel2;
         private System.Windows.Forms.RadioButton radioButtonLevel4;
         private System.Windows.Forms.RadioButton radioButtonLevel6;
+        private System.Windows.Forms.GroupBox groupBoxIpAdress;
     }
 }

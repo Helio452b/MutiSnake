@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9A422BE-5686-487C-95F7-08900595F20F}</ProjectGuid>
+    <ProjectGuid>{160F3B7D-D22D-4BC9-BBCD-B21DD5B07BB6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Snake</RootNamespace>
-    <AssemblyName>Snake</AssemblyName>
+    <RootNamespace>GameServer</RootNamespace>
+    <AssemblyName>GameServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,9 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,60 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="About.Designer.cs">
-      <DependentUpon>About.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FoodCreater.cs" />
-    <Compile Include="GameControl.cs" />
-    <Compile Include="IPAddressTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IPAddressTextBox.Designer.cs">
-      <DependentUpon>IPAddressTextBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyMessageBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MyMessageBox.Designer.cs">
-      <DependentUpon>MyMessageBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RankingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RankingForm.Designer.cs">
-      <DependentUpon>RankingForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingForm.Designer.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SnakeBody.cs" />
-    <Compile Include="SnakeItem.cs" />
-    <Compile Include="SocketClinet.cs" />
-    <EmbeddedResource Include="About.resx">
-      <DependentUpon>About.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IPAddressTextBox.resx">
-      <DependentUpon>IPAddressTextBox.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="SocketServer.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MyMessageBox.resx">
-      <DependentUpon>MyMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,17 +64,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RankingForm.resx">
-      <DependentUpon>RankingForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingForm.resx">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
@@ -127,48 +74,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Snake.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Game.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Setting.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Begin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Ranking.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\About.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Quit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Snake.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SettingIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\AboutIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\RankingIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bitbug_favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\tanchishe.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PlayerInfo\PlayerInfo.csproj">

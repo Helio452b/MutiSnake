@@ -153,8 +153,7 @@ namespace Snake
             bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(), new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
 
             m_gameControl.Score = 0;
-
-            Console.WriteLine(panelPaint.Width);
+            
             m_gameControl.GameStart(this.panelPaint.Width, this.panelPaint.Height, bufferGrap.Graphics);
 
             SetMoveTimerInterval();

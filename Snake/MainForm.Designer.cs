@@ -72,7 +72,7 @@
             this.ToolStripMenuItemAbout});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(1232, 30);
+            this.menuStripMain.Size = new System.Drawing.Size(1232, 28);
             this.menuStripMain.TabIndex = 1;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -83,10 +83,10 @@
             this.ToolStripMenuItemGameStop,
             this.toolStripMenuItemQuit,
             this.ToolStripMenuItemRanking});
-            this.toolStripMenuItemGame.Image = global::Snake.Properties.Resources.Game;
+            this.toolStripMenuItemGame.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemGame.Image")));
             this.toolStripMenuItemGame.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripMenuItemGame.Name = "toolStripMenuItemGame";
-            this.toolStripMenuItemGame.Size = new System.Drawing.Size(73, 34);
+            this.toolStripMenuItemGame.Size = new System.Drawing.Size(73, 24);
             this.toolStripMenuItemGame.Text = "游戏";
             // 
             // ToolStripMenuItemGameBegin
@@ -96,7 +96,7 @@
             this.ToolStripMenuItemGameBegin.ImageTransparentColor = System.Drawing.Color.White;
             this.ToolStripMenuItemGameBegin.Name = "ToolStripMenuItemGameBegin";
             this.ToolStripMenuItemGameBegin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.ToolStripMenuItemGameBegin.Size = new System.Drawing.Size(193, 26);
+            this.ToolStripMenuItemGameBegin.Size = new System.Drawing.Size(224, 26);
             this.ToolStripMenuItemGameBegin.Text = "开始";
             this.ToolStripMenuItemGameBegin.Click += new System.EventHandler(this.ToolStripMenuItemGameBegin_Click);
             // 
@@ -105,7 +105,7 @@
             this.ToolStripMenuItemGameStop.Image = global::Snake.Properties.Resources.Pause;
             this.ToolStripMenuItemGameStop.Name = "ToolStripMenuItemGameStop";
             this.ToolStripMenuItemGameStop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.ToolStripMenuItemGameStop.Size = new System.Drawing.Size(193, 26);
+            this.ToolStripMenuItemGameStop.Size = new System.Drawing.Size(224, 26);
             this.ToolStripMenuItemGameStop.Text = "暂停";
             this.ToolStripMenuItemGameStop.Click += new System.EventHandler(this.ToolStripMenuItemGameStop_Click);
             // 
@@ -114,7 +114,7 @@
             this.toolStripMenuItemQuit.Image = global::Snake.Properties.Resources.Quit;
             this.toolStripMenuItemQuit.Name = "toolStripMenuItemQuit";
             this.toolStripMenuItemQuit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.toolStripMenuItemQuit.Size = new System.Drawing.Size(193, 26);
+            this.toolStripMenuItemQuit.Size = new System.Drawing.Size(224, 26);
             this.toolStripMenuItemQuit.Text = "退出";
             this.toolStripMenuItemQuit.Click += new System.EventHandler(this.ToolStripMenuItemQuit_Click);
             // 
@@ -123,7 +123,7 @@
             this.ToolStripMenuItemRanking.Image = global::Snake.Properties.Resources.Ranking;
             this.ToolStripMenuItemRanking.Name = "ToolStripMenuItemRanking";
             this.ToolStripMenuItemRanking.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.ToolStripMenuItemRanking.Size = new System.Drawing.Size(193, 26);
+            this.ToolStripMenuItemRanking.Size = new System.Drawing.Size(224, 26);
             this.ToolStripMenuItemRanking.Text = "高分榜";
             this.ToolStripMenuItemRanking.Click += new System.EventHandler(this.ToolStripMenuItemRanking_Click);
             // 
@@ -133,7 +133,7 @@
             this.ToolStripMenuItemSetting.Name = "ToolStripMenuItemSetting";
             this.ToolStripMenuItemSetting.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.ToolStripMenuItemSetting.Size = new System.Drawing.Size(73, 34);
+            this.ToolStripMenuItemSetting.Size = new System.Drawing.Size(73, 24);
             this.ToolStripMenuItemSetting.Text = "设置";
             this.ToolStripMenuItemSetting.Click += new System.EventHandler(this.ToolStripMenuItemSetting_Click);
             // 
@@ -143,16 +143,16 @@
             this.ToolStripMenuItemAbout.Name = "ToolStripMenuItemAbout";
             this.ToolStripMenuItemAbout.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.ToolStripMenuItemAbout.Size = new System.Drawing.Size(73, 34);
+            this.ToolStripMenuItemAbout.Size = new System.Drawing.Size(73, 24);
             this.ToolStripMenuItemAbout.Text = "关于";
             this.ToolStripMenuItemAbout.Click += new System.EventHandler(this.ToolStripMenuItemAbout_Click);
             // 
             // panelPaint
             // 
             this.panelPaint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPaint.Location = new System.Drawing.Point(0, 30);
+            this.panelPaint.Location = new System.Drawing.Point(0, 28);
             this.panelPaint.Name = "panelPaint";
-            this.panelPaint.Size = new System.Drawing.Size(1232, 573);
+            this.panelPaint.Size = new System.Drawing.Size(1232, 575);
             this.panelPaint.TabIndex = 2;
             this.panelPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelPaint_Paint);
             // 

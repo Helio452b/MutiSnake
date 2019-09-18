@@ -42,6 +42,7 @@ namespace Snake
             headItem.ItemColor = this.m_headItemColor;
             m_snakeBody.Add(headItem);
 
+            // 初始化snake
             for (int i = 0; i < 6; i++)
             {
                 AddSnakeItem();
@@ -55,34 +56,19 @@ namespace Snake
 
         public Direction SnakeDirec
         {
-            get
-            {
-                return this.m_snakeDirec;
-            }
-            set
-            {
-                this.m_snakeDirec = value;
-            }
+            get { return this.m_snakeDirec; }
+            set { this.m_snakeDirec = value; }
         }
 
         public int SnakeMoveSpeed
         {
-            get
-            {
-                return this.m_snakeMoveSpeed;
-            }
-            set
-            {
-                this.m_snakeMoveSpeed = value;
-            }
+            get { return this.m_snakeMoveSpeed; }
+            set { this.m_snakeMoveSpeed = value; }
         }
 
         public float SnakeGrowSpeed
         {
-            get
-            {
-                return this.m_snakeGrowSpeed;
-            }
+            get { return this.m_snakeGrowSpeed; }
             set
             {
                 if (value > 1 && value < 0)
@@ -90,67 +76,36 @@ namespace Snake
                 else
                     this.m_snakeGrowSpeed = value;
             }
-
         }
 
         public bool IsAlive
         {
-            get
-            {
-                return this.m_isAlive;
-            }
-            set
-            {
-                this.m_isAlive = value;
-            }
+            get { return this.m_isAlive; }
+            set { this.m_isAlive = value; }
         }
 
         public Color HeadItemColor
         {
-            get
-            {
-                return this.m_headItemColor;
-            }
-            set
-            {
-                this.m_headItemColor = value;
-            }
+            get { return this.m_headItemColor; }
+            set { this.m_headItemColor = value; }
         }
 
         public Color BodyItemColor
         {
-            get
-            {
-                return this.m_bodyItemColor;
-            }
-            set
-            {
-                this.m_bodyItemColor = value;
-            }
+            get { return this.m_bodyItemColor; }
+            set { this.m_bodyItemColor = value; }
         }
 
         public int ItemHeight
         {
-            get
-            {
-                return this.m_itemHeight;
-            }
-            set
-            {
-                this.m_itemHeight = value;
-            }
+            get { return this.m_itemHeight; }
+            set { this.m_itemHeight = value; }
         }
 
         public int ItemWidth
         {
-            get
-            {
-                return this.m_itemWidth;
-            }
-            set
-            {
-                this.m_itemWidth = value;
-            }
+            get { return this.m_itemWidth; }
+            set { this.m_itemWidth = value; }
         }
 
         /// <summary>

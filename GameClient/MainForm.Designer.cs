@@ -1,4 +1,4 @@
-﻿namespace Snake
+﻿namespace GameClient
 {
     partial class MainForm
     {
@@ -92,7 +92,7 @@
             // ToolStripMenuItemGameBegin
             // 
             this.ToolStripMenuItemGameBegin.BackColor = System.Drawing.Color.Transparent;
-            this.ToolStripMenuItemGameBegin.Image = global::Snake.Properties.Resources.Begin;
+            this.ToolStripMenuItemGameBegin.Image = global::GameClient.Properties.Resources.Begin;
             this.ToolStripMenuItemGameBegin.ImageTransparentColor = System.Drawing.Color.White;
             this.ToolStripMenuItemGameBegin.Name = "ToolStripMenuItemGameBegin";
             this.ToolStripMenuItemGameBegin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
@@ -102,7 +102,7 @@
             // 
             // ToolStripMenuItemGameStop
             // 
-            this.ToolStripMenuItemGameStop.Image = global::Snake.Properties.Resources.Pause;
+            this.ToolStripMenuItemGameStop.Image = global::GameClient.Properties.Resources.Pause;
             this.ToolStripMenuItemGameStop.Name = "ToolStripMenuItemGameStop";
             this.ToolStripMenuItemGameStop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.ToolStripMenuItemGameStop.Size = new System.Drawing.Size(224, 26);
@@ -111,7 +111,7 @@
             // 
             // toolStripMenuItemQuit
             // 
-            this.toolStripMenuItemQuit.Image = global::Snake.Properties.Resources.Quit;
+            this.toolStripMenuItemQuit.Image = global::GameClient.Properties.Resources.Quit;
             this.toolStripMenuItemQuit.Name = "toolStripMenuItemQuit";
             this.toolStripMenuItemQuit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.toolStripMenuItemQuit.Size = new System.Drawing.Size(224, 26);
@@ -120,7 +120,7 @@
             // 
             // ToolStripMenuItemRanking
             // 
-            this.ToolStripMenuItemRanking.Image = global::Snake.Properties.Resources.Ranking;
+            this.ToolStripMenuItemRanking.Image = global::GameClient.Properties.Resources.Ranking;
             this.ToolStripMenuItemRanking.Name = "ToolStripMenuItemRanking";
             this.ToolStripMenuItemRanking.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.ToolStripMenuItemRanking.Size = new System.Drawing.Size(224, 26);
@@ -129,7 +129,7 @@
             // 
             // ToolStripMenuItemSetting
             // 
-            this.ToolStripMenuItemSetting.Image = global::Snake.Properties.Resources.Setting;
+            this.ToolStripMenuItemSetting.Image = global::GameClient.Properties.Resources.Setting;
             this.ToolStripMenuItemSetting.Name = "ToolStripMenuItemSetting";
             this.ToolStripMenuItemSetting.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
@@ -139,7 +139,7 @@
             // 
             // ToolStripMenuItemAbout
             // 
-            this.ToolStripMenuItemAbout.Image = global::Snake.Properties.Resources.About;
+            this.ToolStripMenuItemAbout.Image = global::GameClient.Properties.Resources.About;
             this.ToolStripMenuItemAbout.Name = "ToolStripMenuItemAbout";
             this.ToolStripMenuItemAbout.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));

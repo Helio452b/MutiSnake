@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Snake
+namespace GameClient
 {
-    public class SnakeBody
+    class SnakeBody
     {
         /// <summary>
         /// 蛇的方向

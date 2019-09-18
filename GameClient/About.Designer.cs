@@ -1,4 +1,4 @@
-﻿namespace Snake
+﻿namespace GameClient
 {
     partial class About
     {
@@ -51,7 +51,7 @@
             // logoPictureBox
             // 
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Image = global::Snake.Properties.Resources.tanchishe;
+            this.logoPictureBox.Image = global::GameClient.Properties.Resources.tanchishe;
             this.logoPictureBox.Location = new System.Drawing.Point(4, 4);
             this.logoPictureBox.Margin = new System.Windows.Forms.Padding(4);
             this.logoPictureBox.Name = "logoPictureBox";

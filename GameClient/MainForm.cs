@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Snake
+namespace GameClient
 {
     public partial class MainForm : Form
     {
@@ -152,7 +153,7 @@ namespace Snake
         {
             bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(), new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
 
-            m_gameControl.Score = 0;
+            m_gameControl.TotalScore = 0;
             
             m_gameControl.GameStart(this.panelPaint.Width, this.panelPaint.Height, bufferGrap.Graphics);
 

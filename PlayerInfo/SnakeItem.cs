@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Snake
+namespace GameClient
 {
-    public class SnakeItem
+    class SnakeItem
     {
         private Point m_itemPosition;
         private int m_itemHeight;

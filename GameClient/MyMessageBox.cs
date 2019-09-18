@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Snake
+namespace GameClient
 {
     public partial class MyMessageBox : Form
     {

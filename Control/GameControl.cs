@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using PlayerInfo;
+using Snake;
 
-namespace Snake
+namespace GameClient
 {
     class GameControl
     {    
@@ -16,7 +16,7 @@ namespace Snake
         private bool m_isGameStart;
 
         private bool m_isGamePause = false;
-        private int m_score = 0;
+        private int m_totalScore = 0;
         private int m_deltaScore = 5;
         private SnakeBody.Direction m_snakePreDirec;
         private float m_snakeGrowSpeed = 0.05f; // 成长速度
@@ -52,16 +52,16 @@ namespace Snake
             }
         }
 
-        public int Score
+        public int TotalScore
         {
             get
             {
-                return this.m_score;
+                return this.m_totalScore;
             }
             set
             {
-                if (m_score >= 0)
-                    this.m_score = value;
+                if (m_totalScore >= 0)
+                    this.m_totalScore = value;
                 else
                     return;
             }
@@ -204,12 +204,12 @@ namespace Snake
 
         public void ScoreInc()
         {
-            this.m_score += m_deltaScore;
+            this.m_totalScore += m_deltaScore;
         }
 
         public void ScoreDec()
         {
-            this.m_score -= m_deltaScore;
+            this.m_totalScore -= m_deltaScore;
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Snake
         /// </summary>
         public void DrawScoreMessage()
         {      
-            scoreMsg = (this.m_gameMode == 1 ? "单机 " : "联机 ") + m_score.ToString() + " 分";
+            scoreMsg = (this.m_gameMode == 1 ? "单机 " : "联机 ") + m_totalScore.ToString() + " 分";
             m_msgSize = m_gameGrap.MeasureString(scoreMsg, m_msgFont);
 
             m_msgPos = new PointF(m_winWidth - m_msgSize.Width,  m_winHeight - m_msgSize.Height);
@@ -268,7 +268,7 @@ namespace Snake
             gameLevelElem.InnerText = Properties.Settings.Default.GameLevel.ToString();
 
             XmlElement scoreElem = m_rankingDoc.CreateElement("Score");
-            scoreElem.InnerText = m_score.ToString();
+            scoreElem.InnerText = m_totalScore.ToString();
 
             playerElem.AppendChild(gameLevelElem);
             playerElem.AppendChild(scoreElem);

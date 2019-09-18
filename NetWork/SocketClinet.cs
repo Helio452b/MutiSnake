@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace Snake
+namespace NetWork
 {
     /// <summary>
     /// 网络客户端模块
@@ -20,10 +20,11 @@ namespace Snake
             public byte[] buffer = new byte[bufferSize];
         }
 
+           
         private Socket m_clientSocket;       // 客户端Socket
         private IPAddress m_serverIPAddress; // 服务器IP地址
         private int m_serverPort;            // 服务器端口
-        private EndPoint m_serverEndPoint;         // 服务器端点
+        private EndPoint m_serverEndPoint;   // 服务器端点
 
         public IPAddress ServerIPAddress
         {
@@ -78,7 +79,7 @@ namespace Snake
             catch (Exception excp)
             {
                 Console.WriteLine(excp.ToString());
-                Console.WriteLine("# Begin_Connect_Error");
+                Console.WriteLine("#Begin_Connect_Error");
             }            
         }
 
@@ -101,26 +102,31 @@ namespace Snake
             catch (Exception excp)
             {
                 Console.WriteLine(excp.ToString());
-                Console.WriteLine("Begin_Async_Receive_Error");                
+                Console.WriteLine("#Begin_Async_Receive_Error");                
             }
         }
 
         /// <summary>
         /// 发送消息到服务器
         /// </summary>
-        /// <param name="msg"></param>
-        public void Send(string msg)
+        /// <param name="Message"></param>
+        public void Send(string Message)
         {
             try
             {
-                byte[] buffer = Encoding.UTF8.GetBytes(msg);
+                byte[] buffer = Encoding.UTF8.GetBytes(Message);
                 m_clientSocket.Send(buffer, buffer.Length, SocketFlags.None);
             }
             catch (Exception excp)
             {
                 Console.WriteLine(excp.ToString());
-                Console.WriteLine("# Client_Send_Error"); 
+                Console.WriteLine("#Client_Send_Error"); 
             }                             
+        }      
+
+        public void EncodeMessage()
+        {
+
         }
     }
 }

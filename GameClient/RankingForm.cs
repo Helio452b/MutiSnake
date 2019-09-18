@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using PlayerInfo;
-namespace Snake
+using Snake;
+namespace GameClient
 {
     public partial class RankingForm : Form
     {

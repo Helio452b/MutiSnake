@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Snake")]
+[assembly: AssemblyTitle("GameControlBase")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Snake")]
+[assembly: AssemblyProduct("GameControlBase")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("05417878-4109-488d-8edf-b33d6aa3699d")]
+[assembly: Guid("6b72bfc8-cbbf-4a1f-ab89-7a897ed97aa9")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

@@ -1,4 +1,4 @@
-﻿namespace Snake
+﻿namespace GameClient
 {
     partial class SettingForm
     {

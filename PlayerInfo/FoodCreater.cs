@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Snake
+namespace GameClient
 {
-    public class FoodCreater
+    class FoodCreater
     {
         public enum FoodColorType
         {

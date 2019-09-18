@@ -1,4 +1,4 @@
-﻿namespace Snake
+﻿namespace GameClient
 {
     partial class RankingForm
     {
@@ -33,7 +33,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RankingForm));
             this.dataGridViewRanking = new System.Windows.Forms.DataGridView();
+            this.tabControlRanking = new System.Windows.Forms.TabControl();
+            this.tabPageOffLineRanking = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRanking)).BeginInit();
+            this.tabControlRanking.SuspendLayout();
+            this.tabPageOffLineRanking.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewRanking
@@ -65,7 +70,7 @@
             this.dataGridViewRanking.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewRanking.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewRanking.GridColor = System.Drawing.Color.Black;
-            this.dataGridViewRanking.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewRanking.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewRanking.Name = "dataGridViewRanking";
             this.dataGridViewRanking.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -79,16 +84,48 @@
             this.dataGridViewRanking.RowHeadersVisible = false;
             this.dataGridViewRanking.RowHeadersWidth = 51;
             this.dataGridViewRanking.RowTemplate.Height = 27;
-            this.dataGridViewRanking.Size = new System.Drawing.Size(458, 327);
+            this.dataGridViewRanking.Size = new System.Drawing.Size(468, 303);
             this.dataGridViewRanking.TabIndex = 0;
+            // 
+            // tabControlRanking
+            // 
+            this.tabControlRanking.Controls.Add(this.tabPageOffLineRanking);
+            this.tabControlRanking.Controls.Add(this.tabPage2);
+            this.tabControlRanking.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlRanking.Location = new System.Drawing.Point(0, 0);
+            this.tabControlRanking.Name = "tabControlRanking";
+            this.tabControlRanking.SelectedIndex = 0;
+            this.tabControlRanking.Size = new System.Drawing.Size(482, 342);
+            this.tabControlRanking.TabIndex = 1;
+            // 
+            // tabPageOffLineRanking
+            // 
+            this.tabPageOffLineRanking.Controls.Add(this.dataGridViewRanking);
+            this.tabPageOffLineRanking.Location = new System.Drawing.Point(4, 29);
+            this.tabPageOffLineRanking.Name = "tabPageOffLineRanking";
+            this.tabPageOffLineRanking.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOffLineRanking.Size = new System.Drawing.Size(474, 309);
+            this.tabPageOffLineRanking.TabIndex = 0;
+            this.tabPageOffLineRanking.Text = "离线排行榜";
+            this.tabPageOffLineRanking.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(450, 294);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "在线排行榜";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // RankingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(458, 327);
-            this.Controls.Add(this.dataGridViewRanking);
+            this.ClientSize = new System.Drawing.Size(482, 342);
+            this.Controls.Add(this.tabControlRanking);
             this.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -97,6 +134,8 @@
             this.Name = "RankingForm";
             this.Text = "高分榜";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRanking)).EndInit();
+            this.tabControlRanking.ResumeLayout(false);
+            this.tabPageOffLineRanking.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -104,5 +143,8 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridViewRanking;
+        private System.Windows.Forms.TabControl tabControlRanking;
+        private System.Windows.Forms.TabPage tabPageOffLineRanking;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }

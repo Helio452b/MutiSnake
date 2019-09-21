@@ -32,6 +32,7 @@
             this.服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.开启服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.断开服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,7 +43,7 @@
             this.服务器ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1000, 38);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -58,23 +59,37 @@
             // 开启服务器ToolStripMenuItem
             // 
             this.开启服务器ToolStripMenuItem.Name = "开启服务器ToolStripMenuItem";
-            this.开启服务器ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.开启服务器ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
             this.开启服务器ToolStripMenuItem.Text = "开启服务器";
             // 
             // 断开服务器ToolStripMenuItem
             // 
             this.断开服务器ToolStripMenuItem.Name = "断开服务器ToolStripMenuItem";
-            this.断开服务器ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.断开服务器ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
             this.断开服务器ToolStripMenuItem.Text = "断开服务器";
             // 
-            // Form1
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.Black;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox1.ForeColor = System.Drawing.Color.Green;
+            this.textBox1.Location = new System.Drawing.Point(0, 48);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(1000, 515);
+            this.textBox1.TabIndex = 1;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "GameServer";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -89,6 +104,7 @@
         private System.Windows.Forms.ToolStripMenuItem 服务器ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 开启服务器ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 断开服务器ToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

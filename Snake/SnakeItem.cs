@@ -8,25 +8,21 @@ namespace Snake
 {
     public class SnakeItem
     {
-        private Point m_itemPosition;
-        private int m_itemHeight;
-        private int m_itemWidth;
+        public int ItemHeight { get; set; }
+        public int ItemWidth { get; set; }
+        public Color ItemColor { get; set; } = Color.YellowGreen;
+        public Point ItemPositon { get; set; }
 
         public SnakeItem(Point itemPositon, Size itemSize)
         {
-            this.m_itemPosition = itemPositon;
-            this.m_itemHeight = itemSize.Height;
-            this.m_itemWidth = itemSize.Width;
+            this.ItemPositon = itemPositon;
+            this.ItemHeight = itemSize.Height;
+            this.ItemWidth = itemSize.Width;
         }
 
         public SnakeItem(Point itemPositon)
         {
-            this.m_itemPosition = itemPositon;
+            this.ItemPositon = itemPositon;
         }
-
-        public int ItemHeight { get => m_itemHeight; set => m_itemHeight = value; }
-        public int ItemWidth { get => m_itemWidth; set => m_itemWidth = value; }
-        public Color ItemColor { get; set; } = Color.YellowGreen;
-        public Point ItemPositon { get => m_itemPosition; set => m_itemPosition = value; }
     }
 }

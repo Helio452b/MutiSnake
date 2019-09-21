@@ -92,7 +92,7 @@
             this.radioButtonOnline.Size = new System.Drawing.Size(107, 36);
             this.radioButtonOnline.TabIndex = 1;
             this.radioButtonOnline.TabStop = true;
-            this.radioButtonOnline.Tag = "2";
+            this.radioButtonOnline.Tag = "1";
             this.radioButtonOnline.Text = "联机";
             this.radioButtonOnline.UseVisualStyleBackColor = true;
             // 
@@ -105,7 +105,7 @@
             this.radioButtonOffline.Size = new System.Drawing.Size(107, 36);
             this.radioButtonOffline.TabIndex = 0;
             this.radioButtonOffline.TabStop = true;
-            this.radioButtonOffline.Tag = "1";
+            this.radioButtonOffline.Tag = "0";
             this.radioButtonOffline.Text = "单机";
             this.radioButtonOffline.UseVisualStyleBackColor = true;
             // 

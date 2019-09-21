@@ -31,12 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.timerMove = new System.Windows.Forms.Timer(this.components);
-            this.timerGrow = new System.Windows.Forms.Timer(this.components);
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItemGame = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemGameBegin = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemGameStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemGamePause = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemRanking = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemSetting = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,11 +46,7 @@
             // 
             // timerMove
             // 
-            this.timerMove.Tick += new System.EventHandler(this.TimerMoveSpeed_Tick);
-            // 
-            // timerGrow
-            // 
-            this.timerGrow.Tick += new System.EventHandler(this.TimerGrow_Tick);
+            this.timerMove.Tick += new System.EventHandler(this.TimerMove_Tick);
             // 
             // toolStripDropDownButton1
             // 
@@ -80,7 +75,7 @@
             // 
             this.toolStripMenuItemGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemGameBegin,
-            this.ToolStripMenuItemGameStop,
+            this.ToolStripMenuItemGamePause,
             this.toolStripMenuItemQuit,
             this.ToolStripMenuItemRanking});
             this.toolStripMenuItemGame.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemGame.Image")));
@@ -92,44 +87,44 @@
             // ToolStripMenuItemGameBegin
             // 
             this.ToolStripMenuItemGameBegin.BackColor = System.Drawing.Color.Transparent;
-            this.ToolStripMenuItemGameBegin.Image = global::GameClient.Properties.Resources.Begin;
+            this.ToolStripMenuItemGameBegin.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripMenuItemGameBegin.Image")));
             this.ToolStripMenuItemGameBegin.ImageTransparentColor = System.Drawing.Color.White;
             this.ToolStripMenuItemGameBegin.Name = "ToolStripMenuItemGameBegin";
             this.ToolStripMenuItemGameBegin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.ToolStripMenuItemGameBegin.Size = new System.Drawing.Size(224, 26);
+            this.ToolStripMenuItemGameBegin.Size = new System.Drawing.Size(193, 26);
             this.ToolStripMenuItemGameBegin.Text = "开始";
             this.ToolStripMenuItemGameBegin.Click += new System.EventHandler(this.ToolStripMenuItemGameBegin_Click);
             // 
-            // ToolStripMenuItemGameStop
+            // ToolStripMenuItemGamePause
             // 
-            this.ToolStripMenuItemGameStop.Image = global::GameClient.Properties.Resources.Pause;
-            this.ToolStripMenuItemGameStop.Name = "ToolStripMenuItemGameStop";
-            this.ToolStripMenuItemGameStop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.ToolStripMenuItemGameStop.Size = new System.Drawing.Size(224, 26);
-            this.ToolStripMenuItemGameStop.Text = "暂停";
-            this.ToolStripMenuItemGameStop.Click += new System.EventHandler(this.ToolStripMenuItemGameStop_Click);
+            this.ToolStripMenuItemGamePause.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripMenuItemGamePause.Image")));
+            this.ToolStripMenuItemGamePause.Name = "ToolStripMenuItemGamePause";
+            this.ToolStripMenuItemGamePause.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.ToolStripMenuItemGamePause.Size = new System.Drawing.Size(193, 26);
+            this.ToolStripMenuItemGamePause.Text = "暂停";
+            this.ToolStripMenuItemGamePause.Click += new System.EventHandler(this.ToolStripMenuItemGamePause_Click);
             // 
             // toolStripMenuItemQuit
             // 
-            this.toolStripMenuItemQuit.Image = global::GameClient.Properties.Resources.Quit;
+            this.toolStripMenuItemQuit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemQuit.Image")));
             this.toolStripMenuItemQuit.Name = "toolStripMenuItemQuit";
             this.toolStripMenuItemQuit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.toolStripMenuItemQuit.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItemQuit.Size = new System.Drawing.Size(193, 26);
             this.toolStripMenuItemQuit.Text = "退出";
             this.toolStripMenuItemQuit.Click += new System.EventHandler(this.ToolStripMenuItemQuit_Click);
             // 
             // ToolStripMenuItemRanking
             // 
-            this.ToolStripMenuItemRanking.Image = global::GameClient.Properties.Resources.Ranking;
+            this.ToolStripMenuItemRanking.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripMenuItemRanking.Image")));
             this.ToolStripMenuItemRanking.Name = "ToolStripMenuItemRanking";
             this.ToolStripMenuItemRanking.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.ToolStripMenuItemRanking.Size = new System.Drawing.Size(224, 26);
+            this.ToolStripMenuItemRanking.Size = new System.Drawing.Size(193, 26);
             this.ToolStripMenuItemRanking.Text = "高分榜";
             this.ToolStripMenuItemRanking.Click += new System.EventHandler(this.ToolStripMenuItemRanking_Click);
             // 
             // ToolStripMenuItemSetting
             // 
-            this.ToolStripMenuItemSetting.Image = global::GameClient.Properties.Resources.Setting;
+            this.ToolStripMenuItemSetting.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripMenuItemSetting.Image")));
             this.ToolStripMenuItemSetting.Name = "ToolStripMenuItemSetting";
             this.ToolStripMenuItemSetting.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
@@ -139,7 +134,7 @@
             // 
             // ToolStripMenuItemAbout
             // 
-            this.ToolStripMenuItemAbout.Image = global::GameClient.Properties.Resources.About;
+            this.ToolStripMenuItemAbout.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripMenuItemAbout.Image")));
             this.ToolStripMenuItemAbout.Name = "ToolStripMenuItemAbout";
             this.ToolStripMenuItemAbout.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
@@ -181,12 +176,11 @@
         #endregion
 
         private System.Windows.Forms.Timer timerMove;
-        private System.Windows.Forms.Timer timerGrow;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemGame;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemGameBegin;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemGameStop;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemGamePause;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetting;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRanking;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAbout;

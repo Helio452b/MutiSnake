@@ -13,7 +13,7 @@ namespace GameServer
     {
         public MainForm()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

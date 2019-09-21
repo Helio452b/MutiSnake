@@ -7,21 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using Snake;
+using NetWork;
+
 namespace GameClient
 {
     public partial class RankingForm : Form
     {
-        private List<Player> m_playerList = new List<Player>();        
+        private List<object> m_playerList = new List<object>();        
         private XmlDocument m_rankingDoc = new XmlDocument();
         public RankingForm()
         {
             InitializeComponent();
            
             this.StartPosition = FormStartPosition.CenterParent;
-            ReadRankingData();            
+            // ReadRankingData();            
         }
 
+        /*
         private void ReadRankingData()
         {
             m_rankingDoc.Load(Environment.CurrentDirectory.ToString() + "\\Ranking.xml");
@@ -31,11 +33,11 @@ namespace GameClient
 
             foreach (XmlNode item in playerNodeList)
             {
-                Player player = new Player();
-                player.PlayerName = ((XmlElement)item).GetAttribute("name").Trim();
+                object player = new object();
+                player.PlayerID = ((XmlElement)item).GetAttribute("name").Trim();
                 player.GameLevel = Convert.ToInt32(((XmlElement)(item.ChildNodes[0])).InnerText.Trim());
                 player.Score = Convert.ToInt32(((XmlElement)(item.ChildNodes[1])).InnerText.Trim());
-
+                
                 m_playerList.Add(player);
             }
 
@@ -77,7 +79,7 @@ namespace GameClient
             {
                 DataRow row = rankingDataTable.NewRow();
                 row["排名"] = i + 1;
-                row["玩家"] = m_playerList[i].PlayerName;
+                row["玩家"] = m_playerList[i].PlayerID;
                 row["游戏等级"] = m_playerList[i].GameLevel;
                 row["游戏得分"] = m_playerList[i].Score;
                 rankingDataTable.Rows.Add(row);
@@ -93,5 +95,7 @@ namespace GameClient
                 this.dataGridViewRanking.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
+
+        */
     }
 }

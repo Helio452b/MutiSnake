@@ -45,8 +45,7 @@ namespace GameClient
                 {
                     if (((RadioButton)item).Checked == true)                    
                     {                       
-                        Properties.Settings.Default.GameLevel = Convert.ToInt32(item.Tag.ToString());
-                        Console.WriteLine(Convert.ToInt32(item.Tag.ToString()));
+                        Properties.Settings.Default.GameLevel = Convert.ToInt32(item.Tag.ToString());                       
                     }                      
                 }
             }

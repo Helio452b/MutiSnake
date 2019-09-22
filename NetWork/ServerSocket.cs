@@ -23,29 +23,26 @@ namespace NetWork
         public DelagateServerReceiveMessage OnReceive;
         private List<Socket> m_playerSocketList = new List<Socket>();
         private Socket m_serverSocket;
-
-        public IPAddress LocalIPAddress { get; set; }
-
-        public int LocalPort { get; set; }
-
-        public EndPoint LocalEndPoint { get; }
+        private IPAddress m_localIPAddress;
+        private int m_localPort;
+        private EndPoint m_localEndPoint;                
 
         public ServerSocket(IPAddress localIPAddress, int loaclPort)
         {
-            this.LocalIPAddress = localIPAddress;
-            this.LocalPort = LocalPort;
-            this.LocalEndPoint = new IPEndPoint(LocalIPAddress, LocalPort);
+            this.m_localIPAddress = localIPAddress;
+            this.m_localPort = loaclPort;
+            this.m_localEndPoint = new IPEndPoint(m_localIPAddress, m_localPort);
 
             m_serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            m_serverSocket.Bind(m_localEndPoint);
+            m_serverSocket.Listen(10);
         }
 
         /// <summary>
         /// 开始监听
         /// </summary>
         public void BeginListen()
-        {
-            m_serverSocket.Bind(LocalEndPoint);
-            m_serverSocket.Listen(10);
+        {           
             m_serverSocket.BeginAccept(BeginAsyncAccept, m_serverSocket);
         }
 
@@ -61,7 +58,7 @@ namespace NetWork
                 Socket clientSocket = serverSocket.EndAccept(ar);
 
                 StateObject state = new StateObject();
-                state.m_workSocket = clientSocket;
+                state.m_workSocket = clientSocket;                
 
                 clientSocket.BeginReceive(state.m_buffer, 0, StateObject.bufferSize, SocketFlags.None, BeginAsyncReceive, state);
 
@@ -90,7 +87,7 @@ namespace NetWork
 
                 if (Convert.ToInt32(receiveMsg.Split(',')[0]) == MessageCode.LOGIN)
                     m_playerSocketList.Add(state.m_workSocket);
-                else if (Convert.ToInt32(receiveMsg.Split(',')[1]) == MessageCode.LOGOUT)
+                else if (Convert.ToInt32(receiveMsg.Split(',')[0]) == MessageCode.LOGOUT)
                     m_playerSocketList.Remove(state.m_workSocket);
 
                 OnReceive(receiveMsg);
@@ -113,7 +110,7 @@ namespace NetWork
             try
             {
                 foreach (Socket player in m_playerSocketList)
-                {
+                {                    
                     byte[] buffer = Encoding.UTF8.GetBytes(message);
                     player.Send(buffer, buffer.Length, SocketFlags.None);
                 }

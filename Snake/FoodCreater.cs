@@ -17,6 +17,11 @@ namespace Snake
         private Graphics m_foodGrap;
         private Size m_foodSize;
 
+        public FoodCreater()
+        {
+
+        }
+
         public FoodCreater(int xMaxValue, int yMaxValue, Graphics foodGrap, Size foodSize)
         {
             this.m_xMaxValue = xMaxValue;
@@ -27,8 +32,8 @@ namespace Snake
 
         public FoodCreater(int xMaxValue, int yMaxValue, Size foodSize)
         {
-            this.m_xMaxValue = xMaxValue;
-            this.m_yMaxValue = yMaxValue;            
+            this.m_xMaxValue = xMaxValue; // winWidth
+            this.m_yMaxValue = yMaxValue; // winHeight
             this.m_foodSize = foodSize;
         }
 

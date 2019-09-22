@@ -1,51 +1,48 @@
-﻿using Snake;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
-using GameControl;
-using System.Net;
+﻿using GameControl;
 using NetWork;
+using Snake;
+using System;
+using System.Drawing;
+using System.Net;
+using System.Windows.Forms;
 
 namespace GameClient
 {
-    public partial class MainForm : Form
+    public partial class GameClientMainForm : Form
     {
         private ClientGameControl m_gameControl;
         private int m_gameMode;
-        BufferedGraphics bufferGrap;
-        BufferedGraphicsContext currentContext;
+        private BufferedGraphics bufferGrap;
+        private BufferedGraphicsContext currentContext;
 
-        public MainForm()
+        public bool MessageBoxConfirm { get; set; }
+
+        /// <summary>
+        /// 游戏客户端主窗体构造函数
+        /// </summary>
+        public GameClientMainForm()
         {
             InitializeComponent();
-            this.Size = new Size(800, 500);                        
-            this.StartPosition = FormStartPosition.CenterScreen;        
-
-            currentContext = BufferedGraphicsManager.Current;    
+            this.Size = new Size(800, 500);
+            this.StartPosition = FormStartPosition.CenterScreen;
             
+            currentContext = BufferedGraphicsManager.Current;
             bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(), new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
 
             this.m_gameMode = Properties.Settings.Default.GameMode; // 读取游戏模式 offline online
+
             if (this.m_gameMode == GameMode.OFFLINE)
                 m_gameControl = new ClientGameControl();
             else if (this.m_gameMode == GameMode.ONLINE)
                 m_gameControl = new ClientGameControl(IPAddress.Parse("127.0.0.1"), 40018);
         }
 
-        public bool MessageBoxConfirm { get; set; }
-
         /// <summary>
         /// 刷新画布
         /// </summary>
         public void RefreshGrap()
         {
-            if (m_gameControl.IsGameStart)                            
+            if (m_gameControl.IsGameStart)
             {
                 if (m_gameControl.Snake != null && m_gameControl.Food != null)
                 {
@@ -53,6 +50,11 @@ namespace GameClient
                     m_gameControl.Snake.Draw();
                     m_gameControl.Food.Draw();
                     m_gameControl.DrawScoreMessage();
+
+                    foreach (SnakeBody item in m_gameControl.m_playerList)
+                    {
+                        item.Draw();
+                    }
                 }
             }
         }
@@ -75,10 +77,15 @@ namespace GameClient
                         SetMoveTimerInterval();              // 加速之后设置计时器的事件
                         m_gameControl.Snake.AddSnakeItem();  // 吃了食物之后则蛇的身体会增加
                         if (m_gameControl.PlayerGameMode == GameMode.OFFLINE)
-                            m_gameControl.Food.CreateFood();     // 然后再新建食物
+                            m_gameControl.Food.CreateFood();     // 离线的时候再新建食物
                     }
 
                     m_gameControl.Snake.Move();              // 移动
+
+                    foreach (SnakeBody item in m_gameControl.m_playerList)
+                    {
+                        item.Move();
+                    }
 
                     RefreshGrap();
                     bufferGrap.Render();
@@ -146,16 +153,16 @@ namespace GameClient
                     }
                 case Keys.Space:
                     ToolStripMenuItemGamePause.PerformClick();
-                    break; 
+                    break;
             }
 
             m_gameControl.Snake.SnakeBodyDirec = newDirec;
             if (m_gameControl.PlayerGameMode == GameMode.ONLINE && m_gameControl.IsGameStart == true)
-                m_gameControl.PlayerSocket.Send(MessageCode.CHANGE_DIREC.ToString() + "," 
+                m_gameControl.PlayerSocket.Send(MessageCode.CHANGE_DIREC.ToString() + ","
                                                 + m_gameControl.Snake.SnakeBodyID + ","
-                                                + newDirec); 
+                                                + Convert.ToInt32(newDirec).ToString());
         }
- 
+
         /// <summary>
         /// 开始游戏
         /// </summary>
@@ -163,12 +170,17 @@ namespace GameClient
         /// <param name="e"></param>
         private void ToolStripMenuItemGameBegin_Click(object sender, EventArgs e)
         {
+            // 开始接收服务器发送过来的信号
+            if (this.m_gameMode == GameMode.ONLINE)
+                m_gameControl.BeginReceiveMessage();
+
+            // 释放画布所占用的资源
             if (bufferGrap != null)
                 bufferGrap.Dispose();
 
-            bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(), new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
+            bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(),
+                                                 new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
 
-            Console.WriteLine(this.panelPaint.Size);
             m_gameControl.GameStart(this.panelPaint.Width, this.panelPaint.Height, bufferGrap.Graphics);
 
             SetMoveTimerInterval();
@@ -182,7 +194,7 @@ namespace GameClient
         /// <param name="e"></param>
         private void ToolStripMenuItemGamePause_Click(object sender, EventArgs e)
         {
-            m_gameControl.GamePause();            
+            m_gameControl.GamePause();
 
             if (m_gameControl.IsGamePause)
             {
@@ -194,6 +206,11 @@ namespace GameClient
             }
         }
 
+        /// <summary>
+        /// 打开关于窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
             About aboutForm = new About();
@@ -201,8 +218,13 @@ namespace GameClient
             aboutForm.ShowDialog();
         }
 
+        /// <summary>
+        /// 离开游戏
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripMenuItemQuit_Click(object sender, EventArgs e)
-        {                        
+        {
             MyMessageBox myMessageBox = new MyMessageBox(this);
             myMessageBox.Show("确认离开？");
             if (MessageBoxConfirm)
@@ -219,7 +241,7 @@ namespace GameClient
             m_gameControl.GamePause();
 
             SettingForm settingForm = new SettingForm();
-            settingForm.ShowDialog();            
+            settingForm.ShowDialog();
         }
 
         /// <summary>
@@ -252,11 +274,11 @@ namespace GameClient
             string welcom = "EAT!EAT!!EAT!!!";
             SizeF welcomeSize = bufferGrap.Graphics.MeasureString(welcom, consolasFont);
 
-            bufferGrap.Graphics.DrawString(welcom, consolasFont, Brushes.DarkRed, 
-                                   new PointF(this.panelPaint.Width / 2 - welcomeSize.Width / 2, 
-                                   this.panelPaint.Height / 2 - welcomeSize.Height / 2));            
+            bufferGrap.Graphics.DrawString(welcom, consolasFont, Brushes.DarkRed,
+                                   new PointF(this.panelPaint.Width / 2 - welcomeSize.Width / 2,
+                                   this.panelPaint.Height / 2 - welcomeSize.Height / 2));
         }
-     
+
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             this.Refresh();
@@ -269,11 +291,8 @@ namespace GameClient
 
         private void PanelPaint_Paint(object sender, PaintEventArgs e)
         {
-            if (!m_gameControl.IsGameStart)
-            {
-                DrawWelcome();
-                bufferGrap.Render();
-            }
+            DrawWelcome();
+            bufferGrap.Render();
         }
     }
 }

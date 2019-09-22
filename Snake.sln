@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameClient", "GameClient\Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Snake\Snake.csproj", "{05417878-4109-488D-8EDF-B33D6AA3699D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameControl", "GameControl\GameControl.csproj", "{97EB3DD7-1BD8-4F24-9F94-A4DE727CD33A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{05417878-4109-488D-8EDF-B33D6AA3699D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05417878-4109-488D-8EDF-B33D6AA3699D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05417878-4109-488D-8EDF-B33D6AA3699D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97EB3DD7-1BD8-4F24-9F94-A4DE727CD33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97EB3DD7-1BD8-4F24-9F94-A4DE727CD33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97EB3DD7-1BD8-4F24-9F94-A4DE727CD33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97EB3DD7-1BD8-4F24-9F94-A4DE727CD33A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,7 +11,7 @@ namespace GameClient
 {
     public partial class MyMessageBox : Form
     {
-        private MainForm m_parentForm;
+        private GameClientMainForm m_parentForm;
 
         public MyMessageBox()
         {
@@ -21,7 +21,7 @@ namespace GameClient
             this.Text = "EAT!EAT!!EAT!!!";
         }
 
-        public MyMessageBox(MainForm form)
+        public MyMessageBox(GameClientMainForm form)
         {
             InitializeComponent();
 

@@ -24,31 +24,6 @@ namespace Snake
         private List<SnakeItem> m_snakeBody = new List<SnakeItem>();
         private const int m_snakeMoveDis = 10;
 
-        public SnakeBody(string snakeBodyID)
-        {
-            this.SnakeBodyID = snakeBodyID;
-        }
-
-        public void CreateSnakeBody(Point beginPos, Graphics snakeGrap)
-        {
-            RemoveAllSnakeItem();
-
-            this.TotalScore = 0;
-            this.m_snakeGrap = snakeGrap;
-            this.SnakeBodyDirec = Direction.WEST; // 初始化方向为west
-            SnakeItem headItem = new SnakeItem(beginPos);
-
-            headItem.ItemColor = this.SnakeHeadColor;
-            m_snakeBody.Add(headItem);
-
-            // 初始化snake
-            for (int i = 0; i < 6; i++)
-            {
-                AddSnakeItem();
-            }
-            IsAlive = true;
-        }
-
         public string SnakeBodyID { get; set; }
 
         public int SnakeBodyScore { get; set; }
@@ -68,6 +43,32 @@ namespace Snake
         public int SnakeItemWidth { get; set; } = 10;
 
         public int TotalScore { get; set; } = 0;
+        public SnakeBody(string snakeBodyID)
+        {
+            this.SnakeBodyID = snakeBodyID;
+        }
+
+        public void CreateSnakeBody(Point beginPos, Graphics snakeGrap)
+        {
+            RemoveAllSnakeItem();
+
+            this.TotalScore = 0;
+            this.m_snakeGrap = snakeGrap;
+
+
+            this.SnakeBodyDirec = Direction.WEST; // 初始化方向为west            
+            SnakeItem headItem = new SnakeItem(beginPos);
+
+            headItem.ItemColor = this.SnakeHeadColor;
+            m_snakeBody.Add(headItem);
+
+            // 初始化snake
+            for (int i = 0; i < 6; i++)
+            {
+                AddSnakeItem();
+            }
+            IsAlive = true;
+        }
 
         /// <summary>
         /// 返回HeadItem

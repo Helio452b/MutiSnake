@@ -96,8 +96,7 @@ namespace NetWork
 
                 string receiceMsg = Encoding.UTF8.GetString(state.buffer, 0, byteCount);
                 OnReceive(receiceMsg);
-
-                Console.WriteLine(receiceMsg);
+                
                 // 持续接受发送过来的字符串
                 state.workSocket.BeginReceive(state.buffer, 0, StateObject.bufferSize, SocketFlags.None, BeginAsyncReceive, state);
             }

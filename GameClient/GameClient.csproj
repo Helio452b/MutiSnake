@@ -71,11 +71,12 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="ClientGameControl.cs" />
+    <Compile Include="GameClientMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="GameClientMainForm.Designer.cs">
+      <DependentUpon>GameClientMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MyMessageBox.cs">
       <SubType>Form</SubType>
@@ -105,8 +106,8 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="GameClientMainForm.resx">
+      <DependentUpon>GameClientMainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MyMessageBox.resx">
@@ -178,10 +179,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameControl\GameControl.csproj">
-      <Project>{97eb3dd7-1bd8-4f24-9f94-a4de727cd33a}</Project>
-      <Name>GameControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetWork\NetWork.csproj">
       <Project>{f669ac3f-9e89-4fdb-aef9-dcd06efe5837}</Project>
       <Name>NetWork</Name>

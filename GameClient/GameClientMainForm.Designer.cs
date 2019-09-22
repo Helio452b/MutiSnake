@@ -1,6 +1,6 @@
 ﻿namespace GameClient
 {
-    partial class MainForm
+    partial class GameClientMainForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameClientMainForm));
             this.timerMove = new System.Windows.Forms.Timer(this.components);
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();

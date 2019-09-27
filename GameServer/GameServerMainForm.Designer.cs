@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StartServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
+            this.timerUpdate = new System.Windows.Forms.Timer(this.components);
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +45,7 @@
             this.服务器ToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(999, 38);
+            this.menuStripMain.Size = new System.Drawing.Size(799, 28);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -77,12 +79,16 @@
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxLogger.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBoxLogger.ForeColor = System.Drawing.Color.Green;
-            this.textBoxLogger.Location = new System.Drawing.Point(0, 48);
+            this.textBoxLogger.Location = new System.Drawing.Point(0, 28);
             this.textBoxLogger.Multiline = true;
             this.textBoxLogger.Name = "textBoxLogger";
             this.textBoxLogger.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLogger.Size = new System.Drawing.Size(999, 526);
+            this.textBoxLogger.Size = new System.Drawing.Size(799, 431);
             this.textBoxLogger.TabIndex = 1;
+            // 
+            // timerUpdate
+            // 
+            this.timerUpdate.Tick += new System.EventHandler(this.TimerUpdate_Tick);
             // 
             // GameServerMainForm
             // 
@@ -108,6 +114,7 @@
         private System.Windows.Forms.ToolStripMenuItem StartServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem StopServerToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxLogger;
+        private System.Windows.Forms.Timer timerUpdate;
     }
 }
 

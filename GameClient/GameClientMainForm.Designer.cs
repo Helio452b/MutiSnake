@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameClientMainForm));
-            this.timerMove = new System.Windows.Forms.Timer(this.components);
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItemGame = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,12 +40,9 @@
             this.ToolStripMenuItemSetting = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.panelPaint = new System.Windows.Forms.Panel();
+            this.timerMove = new System.Windows.Forms.Timer(this.components);
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // timerMove
-            // 
-            this.timerMove.Tick += new System.EventHandler(this.TimerMove_Tick);
             // 
             // toolStripDropDownButton1
             // 
@@ -151,7 +147,11 @@
             this.panelPaint.TabIndex = 2;
             this.panelPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelPaint_Paint);
             // 
-            // MainForm
+            // timerMove
+            // 
+            this.timerMove.Tick += new System.EventHandler(this.TimerMove_Tick);
+            // 
+            // GameClientMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -162,7 +162,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
-            this.Name = "MainForm";
+            this.Name = "GameClientMainForm";
             this.Text = "Eat!Eat!!Eat!!!";
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
@@ -174,8 +174,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timerMove;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemGame;
@@ -186,6 +184,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemQuit;
         private System.Windows.Forms.Panel panelPaint;
+        private System.Windows.Forms.Timer timerMove;
     }
 }
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using Snake;
 using NetWork;
+using System.Threading;
 
 namespace GameServer
 {
@@ -17,88 +18,93 @@ namespace GameServer
         // 生成食物
         // 客户端各自判断事物是否被吃
         // 给客户端发送游戏开始和结束信号        
-
+        private string broadMessage;
         private const int winHeight = 433;
         private const int winWidth = 784;
 
+        private const int PlayerNum = 4;
+
+        // update
+        private const double UpdateIterval = 0.015;
+        private DateTime m_lateUpdateTimeStamp;        
+        private double m_deltaTime;        
+
+        // move
+        private const double MoveInterval = 0.2;
+        private DateTime m_lateMoveTimeStamp;
+        private double m_moveDeltaTime;
+
+        // player
         private List<SnakeBody> PlayerList = new List<SnakeBody>();
-        private FoodCreater Food { get; set; }
-        public ServerSocket GameServerSocket { get; set; }
-        public delegate void TextBoxReceive(string message);
+        private FoodCreater Food;
+        public ServerSocket GameServerSocket;
+        public delegate void TextBoxReceive(string message);        
 
         public GameServerMainForm()
         {
             InitializeComponent();
                         
             Food = new FoodCreater(winWidth, winHeight, new Size(10, 10));
-            GameServerSocket = new ServerSocket(IPAddress.Parse("127.0.0.1"), 40018);
 
-            GameServerSocket.BeginListen();
-            
+            // gamesocket
+            GameServerSocket = new ServerSocket(IPAddress.Parse("127.0.0.1"), 40018);                
             GameServerSocket.OnReceive += new DelagateServerReceiveMessage(DecodeMessage);
+            this.timerUpdate.Interval = 3;
         }
 
         private void StartServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GameServerSocket.BeginListen();
+            this.timerUpdate.Start();
             this.textBoxLogger.Text += "服务器开启" + Environment.NewLine;
+
+            m_lateMoveTimeStamp = m_lateUpdateTimeStamp = DateTime.Now;
         }
 
         private void StopServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+             
         }
 
         private void DecodeMessage(string message)
         {
-            this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<RECEIVE>  " + message);
-            
+            this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<RECEIVE>  " + message);            
             // 解析发送过来的消息
             string[] msgArray = ((string)message).Trim().Split(',');
 
             switch (Convert.ToInt32(msgArray[0]))
             {
                 case MessageCode.LOGIN:
-                    // snakeBodyList 添加 同时转发消息
-                    SnakeBody newSnake = new SnakeBody(msgArray[1]);
-                    PlayerList.Add(newSnake);                    
-                    GameServerSocket.BroadcastMessage(GeneraterOnlineList());
-                    this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<PLAYER_LOGIN>  " + GeneraterOnlineList());
-                    if (PlayerList.Count == 2)
+                    // snakeBodyList 添加 同时转发消息                    
+                    PlayerList.Add(new SnakeBody(msgArray[1]));                    
+                    GameServerSocket.BroadcastMessage(GeneraterOnlineList());                    
+                    if (PlayerList.Count == PlayerNum)
                     {
                         // 在线用户数目达到一定的数目的时候向所有在线用户发送游戏开始信号
                         Food.CreateFood();
-                        string msgGameStart = MessageCode.GAME_START.ToString() + "," +
-                                              Food.FoodPosition.X.ToString() + "," +
-                                              Food.FoodPosition.Y.ToString() + "," +
-                                              ChooseFoodColorType(Food.FoodColor);
-                        GameServerSocket.BroadcastMessage(msgGameStart);
-                        this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<GAME_BEGIN>  " + msgGameStart);
+                        broadMessage = MessageCode.GAME_START.ToString() + "," +
+                                       Food.FoodPosition.X.ToString() + "," +
+                                       Food.FoodPosition.Y.ToString() + "," +
+                                       ChooseFoodColorType(Food.FoodColor);                         
                     }
                     break;
-                case MessageCode.LOGOUT:
+                case MessageCode.DEAD:
                     // snakeBodyList 移除 同时转发消息
-                    SnakeBody removeSnake = FindSnakeBodyByID(msgArray[1], PlayerList);
-                    PlayerList.Remove(removeSnake);
-                    GameServerSocket.BroadcastMessage(message);
-                    this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<SEND>  " + message);
+                    PlayerList.Remove(FindSnakeBodyByID(msgArray[1], PlayerList)); 
+                    broadMessage = message;
                     break;
                 case MessageCode.EAT_FOOD:
-                    // eatfood 之后要再生成一个食物
-                    Food.CreateFood();
-                      message += "," +
-                                 Food.FoodPosition.X.ToString() + "," +
-                                 Food.FoodPosition.Y.ToString() + "," +
-                                 ChooseFoodColorType(Food.FoodColor).ToString();
-                    GameServerSocket.BroadcastMessage(message);
-                    this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<CREATE_FOOD>  " + message);
+                    // eatfood 之后要再生成一个食物                    
+                    Food.CreateFood();                    
+                    broadMessage +=  message + "," +
+                                     Food.FoodPosition.X.ToString() + "," +
+                                     Food.FoodPosition.Y.ToString() + "," +
+                                     ChooseFoodColorType(Food.FoodColor);                     
                     break;
-                default: // 其他消息直接广播
-                    // DEAD
-                    GameServerSocket.BroadcastMessage(message);
-                    this.textBoxLogger.Invoke(new TextBoxReceive(Logger), "<SEND>  " + message);
+                default: // 其他消息直接广播                         
+                    broadMessage = message;
                     break;
-            }
+            }            
         }
 
         private void Logger(string message)
@@ -110,6 +116,12 @@ namespace GameServer
             this.textBoxLogger.ScrollToCaret();
         }
 
+        /// <summary>
+        /// 通过SnakeBodyID找到list中相应的SnakeBody
+        /// </summary>
+        /// <param name="snakeBodyId"></param>
+        /// <param name="snakeList"></param>
+        /// <returns></returns>
         private SnakeBody FindSnakeBodyByID(string snakeBodyId, List<SnakeBody> snakeList)
         {
             var findSnakeBody = from SnakeBody snake in snakeList
@@ -166,6 +178,35 @@ namespace GameServer
 
             onlinePlayer = onlinePlayer.TrimEnd(',');
             return onlinePlayer;
+        }
+           
+        private void TimerUpdate_Tick(object sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+            m_moveDeltaTime = (now - m_lateMoveTimeStamp).TotalSeconds;
+            m_deltaTime = (now - m_lateUpdateTimeStamp).TotalSeconds;
+
+            // 消息分发
+            if (m_deltaTime > UpdateIterval)
+            {
+                m_lateUpdateTimeStamp = now;
+                if (broadMessage != string.Empty)
+                    DoBroadcast();
+            }
+
+            // 移动
+            if (m_moveDeltaTime > MoveInterval)
+            {
+                m_lateMoveTimeStamp = now;
+                GameServerSocket.BroadcastMessage(MessageCode.MOVE.ToString());                
+            }
+        }
+
+        private void DoBroadcast()
+        {                         
+            this.textBoxLogger.Invoke(new TextBoxReceive(Logger), string.Format("<{0} {1}>", DateTime.Now, broadMessage));
+            GameServerSocket.BroadcastMessage(broadMessage);
+            broadMessage = string.Empty;            
         }
     }
 }

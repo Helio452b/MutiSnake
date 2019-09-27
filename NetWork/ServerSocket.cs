@@ -92,7 +92,7 @@ namespace NetWork
 
                 OnReceive(receiveMsg);
                 // 持续接收数据
-                state.m_workSocket.BeginReceive(state.m_buffer, 0, StateObject.bufferSize, SocketFlags.None, BeginAsyncReceive, state);
+                state.m_workSocket.BeginReceive(state.m_buffer, 0, StateObject.bufferSize, SocketFlags.None, BeginAsyncReceive, state);                
             }
             catch (Exception excp)
             {

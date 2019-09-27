@@ -210,8 +210,6 @@ namespace Snake
                     return;
                 }
             }
-
-            this.IsAlive = true;
         }
 
         /// <summary>

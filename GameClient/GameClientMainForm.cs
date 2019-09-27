@@ -25,7 +25,7 @@ namespace GameClient
             InitializeComponent();
             this.Size = new Size(800, 500);
             this.StartPosition = FormStartPosition.CenterScreen;
-            
+
             currentContext = BufferedGraphicsManager.Current;
             bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(), new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
 
@@ -36,29 +36,7 @@ namespace GameClient
             else if (this.m_gameMode == GameMode.ONLINE)
                 m_gameControl = new ClientGameControl(IPAddress.Parse("127.0.0.1"), 40018);
         }
-
-        /// <summary>
-        /// 刷新画布
-        /// </summary>
-        public void RefreshGrap()
-        {
-            if (m_gameControl.IsGameStart)
-            {
-                if (m_gameControl.Snake != null && m_gameControl.Food != null)
-                {
-                    Console.WriteLine("#RefreshGrap");
-                    m_gameControl.Snake.Draw();
-                    m_gameControl.Food.Draw();
-                    m_gameControl.DrawScoreMessage();
-
-                    foreach (SnakeBody item in m_gameControl.m_playerList)
-                    {
-                        item.Draw();
-                    }
-                }
-            }
-        }
-
+ 
         /// <summary>
         /// 移动定时器计时到达的时候触发的事件
         /// </summary>
@@ -66,45 +44,9 @@ namespace GameClient
         /// <param name="e"></param>
         private void TimerMove_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("#TiemrMove timeup!");
-            if (m_gameControl.IsGameStart) // 联机时计时器不断检测server是否发送过来游戏开始信号
-            {
-                if (!m_gameControl.IsGameOver())
-                {
-                    if (m_gameControl.IsEatFood())
-                    {
-                        m_gameControl.AccelarateMoveSpeed(); // 加速
-                        SetMoveTimerInterval();              // 加速之后设置计时器的事件
-                        m_gameControl.Snake.AddSnakeItem();  // 吃了食物之后则蛇的身体会增加
-                        if (m_gameControl.PlayerGameMode == GameMode.OFFLINE)
-                            m_gameControl.Food.CreateFood();     // 离线的时候再新建食物
-                    }
-
-                    m_gameControl.Snake.Move();              // 移动
-
-                    foreach (SnakeBody item in m_gameControl.m_playerList)
-                    {
-                        item.Move();
-                    }
-
-                    RefreshGrap();
-                    bufferGrap.Render();
-                    bufferGrap.Graphics.Clear(this.BackColor);
-                }
-                else
-                {
-                    this.timerMove.Stop();
-                    m_gameControl.GamePause();
-                    m_gameControl.WriteData();
-
-                    MyMessageBox deadBox = new MyMessageBox(this);
-                    deadBox.Show("抱歉！你死掉啦！重新开始？");
-                    if (MessageBoxConfirm)
-                        ToolStripMenuItemGameBegin.PerformClick();
-                }
-            }
+           
         }
-
+        
         /// <summary>
         /// 按键控制
         /// </summary>
@@ -112,7 +54,8 @@ namespace GameClient
         /// <param name="e"></param>
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
-            SnakeBody.Direction newDirec = m_gameControl.Snake.SnakeBodyDirec;
+            SnakeBody.Direction curDierc = m_gameControl.Snake.SnakeBodyDirec;
+            SnakeBody.Direction newDirec = curDierc;
             switch (e.KeyCode)
             {
                 case Keys.Left:
@@ -156,11 +99,14 @@ namespace GameClient
                     break;
             }
 
-            m_gameControl.Snake.SnakeBodyDirec = newDirec;
+            // m_gameControl.Snake.SnakeBodyDirec = newDirec;
             if (m_gameControl.PlayerGameMode == GameMode.ONLINE && m_gameControl.IsGameStart == true)
+            {
                 m_gameControl.PlayerSocket.Send(MessageCode.CHANGE_DIREC.ToString() + ","
-                                                + m_gameControl.Snake.SnakeBodyID + ","
-                                                + Convert.ToInt32(newDirec).ToString());
+                                               + m_gameControl.Snake.SnakeBodyID + ","
+                                               + Convert.ToInt32(newDirec).ToString());
+                Console.WriteLine("<{0} Client_Send {1}>", DateTime.Now.Millisecond, this.m_gameControl.Snake.SnakeBodyID);
+            }
         }
 
         /// <summary>
@@ -181,10 +127,10 @@ namespace GameClient
             bufferGrap = currentContext.Allocate(this.panelPaint.CreateGraphics(),
                                                  new Rectangle(0, 0, this.panelPaint.Width, this.panelPaint.Height));
 
-            m_gameControl.GameStart(this.panelPaint.Width, this.panelPaint.Height, bufferGrap.Graphics);
+            m_gameControl.GameStart(this.panelPaint.Width, this.panelPaint.Height, bufferGrap);
 
-            SetMoveTimerInterval();
-            timerMove.Start();
+            //  SetMoveTimerInterval();
+            //  timerMove.Start();
         }
 
         /// <summary>
@@ -291,8 +237,11 @@ namespace GameClient
 
         private void PanelPaint_Paint(object sender, PaintEventArgs e)
         {
-            DrawWelcome();
-            bufferGrap.Render();
+            if (!this.m_gameControl.IsGameStart)
+            {
+                DrawWelcome();
+                bufferGrap.Render();
+            }
         }
     }
 }

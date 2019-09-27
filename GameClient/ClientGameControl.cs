@@ -13,10 +13,11 @@ namespace GameControl
 {
     public class ClientGameControl
     {
+        private int m_frameID;  // 帧数
         private const int DeltaScore = 5;
         private FoodCreater m_food;
         private SnakeBody m_snake;
-        private const int m_snakeMoveSpeed = 500; // 将移动速度固定
+        private const int m_snakeMoveSpeed = 300; // 将移动速度固定
         private Graphics m_gameGrap;
         private int m_winWidth;
         private int m_winHeight;
@@ -27,7 +28,9 @@ namespace GameControl
         private SizeF m_msgSize;
         private PointF m_msgPos;
         private SnakeBody.Direction m_snakePreDirec;
-        private XmlDocument m_rankingDoc = new XmlDocument();
+        private XmlDocument m_rankingDoc = new XmlDocument();        
+       
+        public BufferedGraphics m_bufferGrap;
 
         public List<SnakeBody> m_playerList; // 用户列表
 
@@ -66,7 +69,8 @@ namespace GameControl
 
             m_snake = new SnakeBody(GeneratePlayerID());    // SnakeBody的构造函数只能生成id
 
-            m_playerList = new List<SnakeBody>();
+            m_playerList = new List<SnakeBody>();            
+            m_frameID = 0;           
         }
 
         #region 联机相关函数
@@ -90,8 +94,9 @@ namespace GameControl
         }
 
         public void DecodeMessage(string message)
-        {
+        {            
             Console.WriteLine("<CLIENT_RECEIVE> {0}", (string)message);
+
             string[] msgArray = ((string)message).Trim().Split(',');
 
             switch (Convert.ToInt32(msgArray[0]))
@@ -100,7 +105,7 @@ namespace GameControl
                     // 识别到登录码  
                     for (int i = 1; i < msgArray.Length; i++)
                     {
-                        if (msgArray[i] != this.Snake.SnakeBodyID)
+                        if (msgArray[i] != this.Snake.SnakeBodyID && !IsSnakeBodyExist(msgArray[i], m_playerList))
                         {
                             SnakeBody newSnake = new SnakeBody(msgArray[i]);
                             newSnake.CreateSnakeBody(this.m_snakeBeginPos, this.m_gameGrap);
@@ -108,9 +113,10 @@ namespace GameControl
                         }
                     }
                     break;
-                case MessageCode.LOGOUT:
+                case MessageCode.DEAD:
                     // 识别到退出码
-                    m_playerList.Remove(FindSnakeBodyByID(msgArray[1], m_playerList));
+                    if (msgArray[1] != this.Snake.SnakeBodyID)                     
+                        FindSnakeBodyByID(msgArray[1], m_playerList).IsAlive = false;
                     break;
                 case MessageCode.GAME_START:
                     // GAME_START,X,Y,COLOR
@@ -123,15 +129,17 @@ namespace GameControl
                     break;
                 case MessageCode.EAT_FOOD:
                     // 吃掉食物码 判断哪一个SnakeBody 吃掉食物 addItem 同时生成
-                    FindSnakeBodyByID(msgArray[1], m_playerList).AddSnakeItem();
+                    if (msgArray[1] != this.Snake.SnakeBodyID)
+                        FindSnakeBodyByID(msgArray[1], m_playerList).AddSnakeItem();
                     m_food.CreateFood(new Point(Convert.ToInt32(msgArray[2]), Convert.ToInt32(msgArray[3])),
                                      ChooseColor(Convert.ToInt32(msgArray[4])));   // 生成食物
+                    Console.WriteLine("#Create food");
                     break;
-                case MessageCode.CHANGE_DIREC:
-                    // 如果是自身发送的消息返回的则不用处理
+                case MessageCode.CHANGE_DIREC:                    
                     if (msgArray[1] == this.Snake.SnakeBodyID)
-                        return;
-                    FindSnakeBodyByID(msgArray[1], m_playerList).SnakeBodyDirec = (SnakeBody.Direction)(Convert.ToInt32(msgArray[2]));
+                        this.Snake.SnakeBodyDirec = (SnakeBody.Direction)(Convert.ToInt32(msgArray[2]));
+                    else
+                        FindSnakeBodyByID(msgArray[1], m_playerList).SnakeBodyDirec = (SnakeBody.Direction)(Convert.ToInt32(msgArray[2]));
                     break;
                 case MessageCode.REACH_BORDER:
                 case MessageCode.EAT_SELF:
@@ -140,9 +148,97 @@ namespace GameControl
                         return;
                     FindSnakeBodyByID(msgArray[1], m_playerList).IsAlive = false;
                     break;
+                case MessageCode.MOVE:
+                    SnakeMove();
+                    break;
                 default:
                     break;
             }
+
+            GameUpdate();
+        }
+
+        private void SnakeMove()
+        {
+            if(IsGameStart)
+            {
+                if (!IsGameOver())
+                {                    
+                    Snake.Move();
+                 
+                             /*              
+                    RefreshGrap();
+                    this.m_bufferGrap.Render();
+                    this.m_bufferGrap.Graphics.Clear(Color.Black);*/
+                }
+                // 其他物体移动
+                foreach (SnakeBody item in this.m_playerList)
+                {
+                    item.Move();
+                }
+                RefreshGrap();
+                this.m_bufferGrap.Render();
+                this.m_bufferGrap.Graphics.Clear(Color.Black);
+            }
+        }
+
+        /// <summary>
+        /// 接收到服务器的消息的时候触发
+        /// </summary>
+        private void GameUpdate()
+        {
+            if (IsGameStart)
+            {
+                if (!IsGameOver())
+                {
+                    if (IsEatFood())
+                    {                        
+                        this.Snake.AddSnakeItem();
+                        if (this.PlayerGameMode == GameMode.OFFLINE)
+                        {
+                            this.Food.CreateFood();
+                        }
+                    }
+
+                    /*
+                    if (m_isGetMoveSignal == true)
+                    {
+                        Snake.Move();
+                        // 其他物体移动
+                        foreach (SnakeBody item in this.m_playerList)
+                        {
+                            item.Move();
+                        }
+                        this.m_isGetMoveSignal = false;
+                    }   
+                    */
+
+                    RefreshGrap();
+                    this.m_bufferGrap.Render();
+                    this.m_bufferGrap.Graphics.Clear(Color.Black);
+                }
+                else
+                {
+                    GamePause();
+                }
+            }
+        }
+
+        private void RefreshGrap()
+        {
+            if (this.m_snake.IsAlive)
+            {
+                this.Snake.Draw();
+                Console.WriteLine("Draw self");
+            }
+            this.Food.Draw();
+            this.DrawScoreMessage();
+
+            foreach (SnakeBody item in m_playerList)
+            {
+                if (item.IsAlive)
+                    item.Draw();
+            }            
         }
 
         /// <summary>
@@ -181,9 +277,20 @@ namespace GameControl
         {
             var findSnakeBody = from SnakeBody snake in snakeList
                                 where snake.SnakeBodyID == snakeBodyId
-                                select snake;
-
+                                select snake;           
+            
             return findSnakeBody.Single();
+        }
+
+        /// <summary>
+        /// 判断SnakeBoydID是否存在
+        /// </summary>
+        /// <param name="snakeBodyId"></param>
+        /// <param name="snakeList"></param>
+        /// <returns></returns>
+        private bool IsSnakeBodyExist(string snakeBodyId, List<SnakeBody> snakeList)
+        {
+            return snakeList.Where(s => s.SnakeBodyID == snakeBodyId).Count() > 0 ? true : false;
         }
         #endregion
 
@@ -193,10 +300,14 @@ namespace GameControl
         /// <returns></returns>
         public bool IsGameOver()
         {
+            if (this.Snake.IsAlive == false)
+                return false;
+
             m_snake.HitSelfTest();  // 是否吃到自己
             this.HitBorderTest();   // 是否撞到墙
             if (m_snake.IsAlive == false)
             {
+                Console.WriteLine("i have dead a!a!a!");
                 if (this.PlayerGameMode == GameMode.ONLINE)
                 {
                     PlayerSocket.Send(MessageCode.DEAD.ToString() + ","
@@ -214,11 +325,12 @@ namespace GameControl
         /// <param name="winWidth">界面宽度</param>
         /// <param name="winHeight">界面高度</param>
         /// <param name="snakeGrap">画布</param>
-        public void GameStart(int winWidth, int winHeight, Graphics snakeGrap)
+        public void GameStart(int winWidth, int winHeight, BufferedGraphics bufferGrap)
         {
             // 游戏开始时候设置 winWidth, winHeight, snakeGrap
-            // 初始化winwidth, winheight, snakegrap            
-            this.m_gameGrap = snakeGrap;
+            // 初始化winwidth, winheight, snakegrap   
+            this.m_bufferGrap = bufferGrap;
+            this.m_gameGrap = bufferGrap.Graphics;
             this.m_winHeight = winHeight;
             this.m_winWidth = winWidth;
 
@@ -236,7 +348,7 @@ namespace GameControl
                 this.IsGamePause = false;
                 // 实例化食物类
                 m_food = new FoodCreater(winWidth, winHeight,
-                                         snakeGrap, new Size(10, 10));
+                                         this.m_gameGrap, new Size(10, 10));
                 m_food.CreateFood();   // 生成食物			
             }
             else if (this.PlayerGameMode == GameMode.ONLINE)
@@ -247,7 +359,7 @@ namespace GameControl
 
                 // 实例化食物类
                 m_food = new FoodCreater(winWidth, winHeight,
-                                         snakeGrap, new Size(10, 10));                
+                                         this.m_gameGrap, new Size(10, 10));                
             }
         }
 
@@ -258,11 +370,11 @@ namespace GameControl
         public bool IsEatFood()
         {
             if (m_snake.HeadItem().ItemPositon == m_food.FoodPosition)
-            {
+            {                
                 this.m_snake.TotalScore += DeltaScore;
                 if (this.PlayerGameMode == GameMode.ONLINE)
                     PlayerSocket.Send(MessageCode.EAT_FOOD.ToString() + ","
-                                      + this.Snake.SnakeBodyID);
+                                      + this.Snake.SnakeBodyID);                
                 return true;
             }
             else
@@ -314,6 +426,7 @@ namespace GameControl
                 m_snake.SnakeBodyDirec = SnakeBody.Direction.PAUSE;
 
                 IsGamePause = true;
+        
             }
             else
             {
@@ -330,13 +443,19 @@ namespace GameControl
             m_scoreMsg = (this.PlayerGameMode == GameMode.OFFLINE ? "单机 " : "联机 ") + m_snake.TotalScore.ToString() + " 分";
             m_msgSize = m_gameGrap.MeasureString(m_scoreMsg, m_msgFont);
 
+            SizeF frameSize = m_gameGrap.MeasureString("Frame" + m_frameID.ToString(), m_msgFont);
+
             m_msgPos = new PointF(m_winWidth - m_msgSize.Width, m_winHeight - m_msgSize.Height);
+            PointF framePos = new PointF(m_winWidth - frameSize.Width, 0);
+
+
             m_gameGrap.DrawString(m_scoreMsg, m_msgFont, Brushes.DarkRed, m_msgPos);
+            m_gameGrap.DrawString("Frame" + m_frameID.ToString(), m_msgFont, Brushes.DarkRed, framePos);
         }
 
         public void WriteData()
         {
-                        /*
+            /*
             List<Player> playerList = new List<Player>();
             // 读取 如果数据大于10 则删除最后一个
             m_rankingDoc.Load(Environment.CurrentDirectory.ToString() + "\\Ranking.xml");
@@ -384,7 +503,7 @@ namespace GameControl
             root.AppendChild(playerElem);
 
             m_rankingDoc.Save(Environment.CurrentDirectory + "\\Ranking.xml");
-*/
+            */
         }
        
         /// <summary>

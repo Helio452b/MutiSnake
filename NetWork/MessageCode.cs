@@ -20,6 +20,8 @@ namespace NetWork
         public const int LOGOUT = 7;
         public const int EAT_FOOD = 8;
         public const int DEAD = 9;
+        public const int TEST = 10;
+        public const int MOVE = 11;
     }
 
     public class GameMode
